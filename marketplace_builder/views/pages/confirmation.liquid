@@ -1,0 +1,40 @@
+---
+layout: templates/2
+max_deep_level: 1
+metadata:
+  name: Confirmation
+  studio:
+    order:
+    - orders-list-view
+    sections:
+      orders-list-view:
+        id: orders-list-view
+        data: {}
+        name: Orders list view
+        type: legacy_dynamic
+        title: orders-list-view
+        system:
+          type: detail
+          layout: orders-list-view
+          admin_link: undefined
+          liquid_tag: form_confirmation
+          live_updates: false
+          section_name: Orders list view
+          schema_selector:
+            module_id: module_14
+            sub_module_id: '8'
+          physical_file_path: views/partials/layouts/form_confirmation/orders-list-view.liquid
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+  last_edit: 1789397667899
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+
+{% include 'modules/module_357/render_page' %}

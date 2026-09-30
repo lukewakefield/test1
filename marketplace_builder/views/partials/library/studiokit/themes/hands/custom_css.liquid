@@ -1,0 +1,464 @@
+---
+metadata:
+  name: Hands
+---
+/* Hands
+   Dark studio theme. One typeface, medium weight, white pills, muted body,
+   and a single orange accent. No offset shadows and no scroll-driven motion. */
+
+/* ==========================================================================
+   REQUIRED CLASSES
+   ========================================================================== */
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-[96rem] px-8 py-24 md:px-12 md:py-32 lg:px-16 lg:py-40;
+  }
+
+  .eyebrow_text {
+    @apply text-sm font-medium text-white/60;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-base font-medium text-white no-underline transition-colors duration-150;
+  }
+
+  .button-secondary:hover {
+    @apply bg-white/15 text-white;
+  }
+
+  .button-secondary:active {
+    @apply bg-white/20;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/10 bg-base-900 p-6 text-white md:p-8;
+  }
+
+  .card :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    color: #fff;
+  }
+
+  .card :is(p, .p, li, .li) {
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  body {
+    @apply bg-base-950 text-white antialiased;
+    font-family: var(--font-body), Geist, Arial, sans-serif;
+  }
+
+  ::selection {
+    background: var(--color-primary-500);
+    color: var(--color-base-950);
+  }
+
+  section {
+    @apply w-full mx-auto bg-base-950 text-white min-[2560px]:max-w-[130rem];
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    @apply font-medium text-white;
+    font-family: var(--font-heading), Geist, Arial, sans-serif;
+    text-wrap: balance;
+  }
+
+  h1,
+  .h1 {
+    @apply mb-6 text-4xl leading-[1.2] tracking-[-0.5px] sm:text-5xl lg:text-6xl xl:text-[4rem];
+  }
+
+  h2,
+  .h2 {
+    @apply mb-5 text-3xl leading-[1.2] tracking-[-0.5px] sm:text-4xl lg:text-5xl;
+  }
+
+  h3,
+  .h3 {
+    @apply mb-4 text-2xl leading-[1.4];
+  }
+
+  h4,
+  .h4 {
+    @apply mb-3 text-xl leading-snug;
+  }
+
+  h5,
+  .h5 {
+    @apply mb-2 text-lg leading-normal;
+  }
+
+  h6,
+  .h6 {
+    @apply mb-2 text-sm font-medium leading-normal text-white/60;
+  }
+
+  p,
+  .p {
+    @apply mb-4 max-w-2xl text-lg font-medium leading-[1.5];
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  strong {
+    @apply font-medium text-white;
+  }
+
+  em {
+    @apply italic;
+  }
+
+  /* Sections should wrap a word in <mark> when it needs the orange accent. */
+  mark,
+  .mark {
+    background: transparent;
+    color: var(--mark-color);
+    font-weight: 500;
+  }
+
+  small,
+  .small {
+    @apply text-sm;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  a,
+  .a {
+    @apply font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors duration-150;
+  }
+
+  a:hover,
+  .a:hover {
+    @apply text-[var(--color-primary-400)] decoration-[var(--color-primary-500)];
+  }
+
+  button,
+  .button {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white bg-white px-5 py-2 text-base font-medium text-base-950 no-underline transition-colors duration-150;
+  }
+
+  button:hover,
+  .button:hover {
+    @apply bg-neutral-100 text-base-950;
+  }
+
+  button:active,
+  .button:active {
+    @apply bg-neutral-200 text-base-950;
+  }
+
+  ul,
+  .ul {
+    @apply pl-5 text-base;
+    color: rgba(255, 255, 255, 0.55);
+    list-style-type: disc;
+  }
+
+  ul ul,
+  .ul .ul {
+    list-style-type: circle;
+  }
+
+  ul ul ul,
+  .ul .ul .ul {
+    list-style-type: square;
+  }
+
+  ol,
+  .ol {
+    @apply pl-5 text-base;
+    color: rgba(255, 255, 255, 0.55);
+    list-style-type: decimal;
+  }
+
+  ol ol,
+  .ol .ol {
+    list-style-type: lower-alpha;
+  }
+
+  ol ol ol,
+  .ol .ol .ol {
+    list-style-type: lower-roman;
+  }
+
+  li,
+  .li {
+    @apply mb-1.5;
+  }
+
+  dl,
+  .dl {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  dt,
+  .dt {
+    @apply mt-4 font-medium text-white;
+  }
+
+  dd,
+  .dd {
+    @apply mb-3 mt-1;
+  }
+
+  blockquote,
+  .blockquote {
+    @apply my-8 border-l border-white/15 py-1 pl-6 text-2xl font-medium leading-[1.3] text-white md:text-3xl;
+  }
+
+  cite,
+  .cite {
+    @apply mt-3 block text-sm font-medium not-italic;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  q,
+  .q {
+    @apply text-white;
+  }
+
+  img,
+  .img {
+    @apply h-auto max-w-full rounded-2xl;
+  }
+
+  figure,
+  .figure {
+    @apply my-8;
+  }
+
+  figcaption,
+  .figcaption {
+    @apply mt-3 text-sm;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  code,
+  .code {
+    @apply rounded-md bg-white/10 px-1.5 py-0.5 text-sm text-white;
+  }
+
+  pre {
+    @apply overflow-x-auto rounded-2xl border border-white/10 bg-base-900 p-5 text-sm text-white;
+  }
+
+  pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
+
+  table,
+  .table {
+    @apply w-full border-collapse text-sm;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  th,
+  .th {
+    @apply border-b border-white/15 py-3 text-left font-medium text-white;
+  }
+
+  td,
+  .td {
+    @apply border-b border-white/10 py-3;
+  }
+
+  label,
+  .label {
+    @apply mb-2 block text-sm font-medium text-white;
+  }
+
+  input,
+  textarea,
+  select,
+  .input,
+  .textarea,
+  .select {
+    @apply w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none transition-colors;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply border-[var(--color-primary-500)];
+  }
+
+  fieldset,
+  .fieldset {
+    @apply rounded-2xl border border-white/10 p-6;
+  }
+
+  legend,
+  .legend {
+    @apply px-2 text-sm font-medium text-white;
+  }
+
+  summary,
+  .summary {
+    @apply cursor-pointer py-4 text-lg font-medium text-white;
+  }
+
+  summary:hover,
+  .summary:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-[var(--color-primary-500)] ring-offset-2 ring-offset-base-950;
+  }
+}
+
+/* Light bands stay readable when a section sets its own light background. */
+@layer components {
+  section:is(
+      .bg-white,
+      .bg-base-50,
+      .bg-base-100,
+      .bg-base-200,
+      .bg-neutral-50,
+      .bg-neutral-100,
+      .bg-tertiary-50,
+      .bg-tertiary-100
+    )
+    :is(h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5) {
+    color: var(--color-base-950);
+  }
+
+  section:is(
+      .bg-white,
+      .bg-base-50,
+      .bg-base-100,
+      .bg-base-200,
+      .bg-neutral-50,
+      .bg-neutral-100,
+      .bg-tertiary-50,
+      .bg-tertiary-100
+    )
+    :is(p, .p, li, .li, small, .small) {
+    color: var(--color-neutral-600);
+  }
+
+  section:is(
+      .bg-white,
+      .bg-base-50,
+      .bg-base-100,
+      .bg-base-200,
+      .bg-neutral-50,
+      .bg-neutral-100
+    )
+    :is(a, .a) {
+    color: var(--color-base-950);
+  }
+}
+
+/* ==========================================================================
+   RICH CONTENT
+   ========================================================================== */
+
+@layer components {
+  .format {
+    @apply leading-relaxed;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .format :is(h1, h2, h3, h4, h5, h6) {
+    @apply text-white;
+  }
+
+  .format a {
+    @apply text-white;
+  }
+
+  .format strong {
+    @apply font-medium text-white;
+  }
+}
+
+/* ==========================================================================
+   THIRD-PARTY COMPONENTS
+   ========================================================================== */
+
+@layer components {
+  [data-accordion] button,
+  [data-accordion] [aria-expanded] {
+    @apply w-full justify-between rounded-none border-0 border-b border-white/10 bg-transparent px-0 py-5 text-left text-lg font-medium normal-case tracking-normal text-white shadow-none;
+  }
+
+  [data-accordion] button[aria-expanded='true'],
+  [data-accordion] [aria-expanded='true'] {
+    @apply text-white;
+  }
+
+  [data-accordion-body],
+  [data-accordion] [role='region'] {
+    @apply border-b border-white/10 py-4;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  [role='dialog'] {
+    @apply rounded-2xl border border-white/10 bg-base-900 text-white shadow-lg;
+  }
+
+  [role='menu'],
+  [data-dropdown-toggle] + div {
+    @apply rounded-2xl border border-white/10 bg-base-900 py-2 text-white shadow-lg;
+  }
+
+  [role='tooltip'] {
+    @apply rounded-lg bg-white px-3 py-2 text-sm font-medium text-base-950;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    @apply text-white;
+  }
+
+  .swiper-pagination-bullet {
+    @apply h-2 w-2 rounded-full bg-white/30 opacity-100;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply bg-white;
+  }
+
+  lite-youtube {
+    @apply overflow-hidden rounded-2xl border border-white/10;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+
+  .fc {
+    font-family: var(--font-body), Geist, Arial, sans-serif;
+  }
+
+  .fc .fc-button {
+    @apply rounded-full border border-white bg-white text-base-950;
+  }
+
+  .fc .fc-button:hover {
+    @apply bg-neutral-100 text-base-950;
+  }
+}

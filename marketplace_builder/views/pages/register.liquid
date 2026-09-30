@@ -1,0 +1,45 @@
+---
+layout: templates/2
+max_deep_level: 1
+metadata:
+  name: Register
+  studio:
+    order:
+    - default-register-page
+    sections:
+      default-register-page:
+        id: default-register-page
+        data: {}
+        name: Default register page
+        type: legacy_dynamic
+        title: default-register-page
+        system:
+          id: '2'
+          type: default
+          layout: default-register-page
+          admin_link: "/cms/forms"
+          liquid_tag: form
+          live_updates: false
+          section_name: Default register page
+          schema_selector:
+            module_id: module_s1
+            sub_module_id: '1'
+          physical_file_path: views/partials/layouts/forms/global/default-register-page.liquid
+        mapping: {}
+        settings:
+          id: '2'
+          variant: variant-1
+          side_image: library/studiokit/background/colorbg1.jpg
+          side_image_alt: ''
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+  last_edit: 1789555793156
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+
+{% include 'modules/module_357/render_page' %}

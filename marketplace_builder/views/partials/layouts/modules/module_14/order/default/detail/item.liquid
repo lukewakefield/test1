@@ -1,0 +1,128 @@
+{%- comment -%}
+  Order detail view for any order, reached generically via
+  /siteglide-orders/{slug} (views/pages/modules/module_14/order.liquid).
+
+  Adapted from the Tailwind styling in
+  layouts/modules/module_14/order/orders-list-view/detail/item.liquid, which
+  is form-confirmation-only (it reads billing info from `form.properties`,
+  only available right after checkout). Here everything reads from `this`
+  (the order record) instead, so it works for any order at any time.
+
+  Dropped from the original: the Cart/Checkout/Order Summary breadcrumb
+  (this page isn't part of that flow), the custom-fields loop (that data
+  only exists on the original form submission, not the order record), and
+  the billing-info edit modal (non-functional checkout UI, not order detail).
+{%- endcomment -%}
+
+{%- assign cart_url = '/cart' -%}
+{%- assign shop_home_url = '/' -%}
+{%- assign orders_url = '/user-dashboard?tab=orders' -%}
+
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Order summary #{{ this.id }}</h2>
+      <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ this.release_date | date: "%b %d %Y" }}</p>
+      <p class="text-lg font-semibold text-gray-900 dark:text-white">Status: {{ this['Status'] }}</p>
+
+      <div class="mt-6 space-y-4 border-b border-t border-gray-200 py-8 dark:border-gray-700 sm:mt-8">
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Billing & Delivery information</h4>
+        <dl>
+          <dt class="text-base font-medium text-gray-900 dark:text-white">Full Name</dt>
+          <dd class="mt-1 text-base font-normal text-gray-500 dark:text-gray-400">{{ this.user.name }}</dd>
+          <dt class="text-base font-medium text-gray-900 dark:text-white">Email</dt>
+          <dd class="mt-1 text-base font-normal text-gray-500 dark:text-gray-400">{{ this.user.email }}</dd>
+        </dl>
+        {%- if this['Shipping Address'] != blank -%}
+          <dl>
+            <dt class="text-base font-medium text-gray-900 dark:text-white">Shipping Address</dt>
+            <dd class="mt-1 text-base font-normal text-gray-500 dark:text-gray-400">{{ this['Shipping Address'] | replace: ", ,", "," | replace: ",", ",<br>" }}</dd>
+          </dl>
+        {%- endif -%}
+      </div>
+
+      <div class="mt-6 sm:mt-8">
+        <div class="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
+          <table class="w-full text-left font-medium text-gray-900 dark:text-white md:table-fixed">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+              {%- assign ordered_products_snapshots = this['Ordered Products'] | parse_json | parse_json -%}
+              {%- for prod in ordered_products_snapshots -%}
+                {%- assign product_snapshot = prod[1] -%}
+                {%- assign product_current_details = this.order_products | detect: id: product_snapshot.product_id -%}
+                {%- assign attr_current_details = '' | split: ',' -%}
+                {%- assign product_snapshot_price = product_snapshot.price_charge -%}
+                {%- for attr in product_snapshot.attributes -%}
+                  {%- assign option_id = attr[1].option_id -%}
+                  {%- assign option_current_details = product_current_details.product_attribute_options[option_id] -%}
+                  {%- assign attr_current_details = attr_current_details | array_add: option_current_details -%}
+                  {%- assign product_snapshot_price = product_snapshot_price | plus: attr[1].price_charge -%}
+                {%- endfor -%}
+
+                {%- for attr_opt in attr_current_details -%}
+                  {%- if attr_opt.image != blank -%}
+                    {%- assign product_snapshot_image = attr_opt.image -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <tr>
+                  <td class="whitespace-nowrap py-4 md:w-[384px]">
+                    <div class="flex items-center gap-4">
+                      <a href="{{ product_current_details.full_slug }}" class="flex items-center aspect-square w-10 h-10 shrink-0">
+                        {%- if product_snapshot_image != blank -%}
+                          <img src="{{ product_snapshot_image | asset_url }}" alt="{{ product_snapshot['name'] }}" width="40" height="40" class="h-auto w-full max-h-full">
+                        {%- else -%}
+                          <img src="{{ product_current_details['Image'] | asset_url }}" alt="{{ product_snapshot['name'] }}" width="40" height="40" class="h-auto w-full max-h-full">
+                        {%- endif -%}
+                      </a>
+                      <a href="{{ product_current_details.full_slug }}" class="hover:underline">{{ product_snapshot['name'] }}</a>
+                      {%- for attribute_opt in attr_current_details -%}
+                        <p class="text-xs {% if forloop.last %}mb-0{% endif %}">{{ attribute_opt.product_attribute.name }}: {{ attribute_opt.name }}</p>
+                      {%- endfor -%}
+                    </div>
+                  </td>
+                  <td class="p-4 text-base font-normal text-gray-900 dark:text-white">x{{ product_snapshot.quantity }}</td>
+                  <td class="p-4 text-right text-base font-bold text-gray-900 dark:text-white">{{ this['Currency Symbol'] }}{{ product_snapshot_price | times: product_snapshot.quantity | divided_by: 100 | format_number: precision: 2 }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 space-y-6">
+          <h4 class="text-xl font-semibold text-gray-900 dark:text-white">Order summary</h4>
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <dl class="flex items-center justify-between gap-4">
+                <dt class="text-gray-500 dark:text-gray-400">Original price</dt>
+                <dd class="text-base font-medium text-gray-900 dark:text-white">{{ this['Currency Symbol'] }}{{ this['Price - Cart Item Total Before Tax'] | divided_by: 100.0 | format_number: precision: 2 }}</dd>
+              </dl>
+              <dl class="flex items-center justify-between gap-4">
+                <dt class="text-gray-500 dark:text-gray-400">Savings</dt>
+                <dd class="text-base font-medium text-green-500">-{{ this['Currency Symbol'] }}{{ this['Discount Code - Total Saving'] | divided_by: 100.0 | format_number: precision: 2 }}</dd>
+              </dl>
+              <dl class="flex items-center justify-between gap-4">
+                <dt class="text-gray-500 dark:text-gray-400">{{ this['Shipping Method Name'] }}</dt>
+                <dd class="text-base font-medium text-gray-900 dark:text-white">{{ this['Shipping Method Price - Before Tax'] | divided_by: 100.0 | format_number: precision: 2 }}</dd>
+              </dl>
+              <dl class="flex items-center justify-between gap-4">
+                <dt class="text-gray-500 dark:text-gray-400">Tax</dt>
+                <dd class="text-base font-medium text-gray-900 dark:text-white">{{ this['Currency Symbol'] }}{{ this['Price - Cart Total Tax Amount'] | divided_by: 100.0 | format_number: precision: 2 }}</dd>
+              </dl>
+            </div>
+            <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+              <dt class="text-lg font-bold text-gray-900 dark:text-white">Total</dt>
+              <dd class="text-lg font-bold text-gray-900 dark:text-white">{{ this['Currency Symbol'] }}{{ this['Total Price'] | divided_by: 100.0 | format_number: precision: 2 }}</dd>
+            </dl>
+          </div>
+          <div class="gap-4 sm:flex sm:items-center">
+            {%- if context.current_user.id != blank -%}
+              <button type="button" class="w-full rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700" onclick="s_e_reorder({ order_id: '{{ this.id }}', token: '{{ context.authenticity_token }}', cart_url: '{{ cart_url }}'})">Re-Order</button>
+            {%- endif -%}
+            <a href="{{ shop_home_url }}" class="mt-4 sm:mt-0 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Return to Shopping</a>
+            <a href="{{ orders_url }}" class="mt-4 sm:mt-0 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Back to Orders</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,310 @@
+---
+metadata:
+  name: Design System
+  tags:
+  class: section
+  fields:
+  - id: heading
+    type: text
+    label: Heading
+    default: One system for every screen.
+    richtext: false
+  - id: intro
+    type: textarea
+    label: Introduction
+    default: Colors, type, and components live here as specimens. Choose a section on the left. These samples use the same tokens as the rest of the site.
+    richtext: false
+  hide_on: []
+  category: content
+  requires: []
+  settings: []
+  collection: remy
+  components: []
+  updated_at: 1781822000
+  collections:
+  global_data:
+  global_fields: []
+---
+<section class="{{ this.variant }} @container w-full" data-ds-docs>
+  <div class="ds-shell flex min-h-svh w-full flex-col @lg:flex-row">
+  <aside class="ds-nav w-full shrink-0 border-b border-[var(--p-border-subtle)] bg-[var(--p-bg-canvas)] px-3 py-4 @lg:sticky @lg:top-0 @lg:h-svh @lg:w-[16.5rem] @lg:overflow-y-auto @lg:border-r @lg:border-b-0 @lg:px-3 @lg:py-5">
+    <a href="#overview" class="mb-3 block px-2.5 py-1 text-[14px] font-semibold text-[var(--p-text-primary)]">Design System</a>
+    <nav class="flex flex-col gap-0.5" aria-label="Design system">
+      <a href="#overview" data-ds-link="overview">Overview</a>
+      <p class="ds-nav-label">Foundations</p>
+      <a href="#color" data-ds-link="color">Color</a>
+      <a href="#typography" data-ds-link="typography">Typography</a>
+      <a href="#identity" data-ds-link="identity">App Identity</a>
+      <p class="ds-nav-label">Components</p>
+      <a href="#buttons" data-ds-link="buttons">Buttons</a>
+      <a href="#links" data-ds-link="links">Links</a>
+      <a href="#inputs" data-ds-link="inputs">Inputs &amp; Forms</a>
+      <a href="#selection" data-ds-link="selection">Selection Controls</a>
+      <a href="#labeling" data-ds-link="labeling">Tags, Badges &amp; Avatars</a>
+      <a href="#data" data-ds-link="data">Tables &amp; Lists</a>
+      <a href="#feedback" data-ds-link="feedback">Feedback</a>
+      <a href="#overlays" data-ds-link="overlays">Overlays &amp; Menus</a>
+    </nav>
+  </aside>
+
+  <div class="min-w-0 flex-1 px-6 py-10 @lg:px-14 @lg:py-14" data-ds-main>
+    <div class="mx-auto flex max-w-[42rem] flex-col gap-8">
+
+      <article data-ds-panel="overview">
+        <p class="ds-label mb-3">Foundations</p>
+        <h1 class="mb-4">{% if this.heading != blank %}{{ this.heading }}{% else %}One system for every screen.{% endif %}</h1>
+        <p class="max-w-[38rem]">{% if this.intro != blank %}{{ this.intro }}{% else %}Colors, type, and components live here as specimens. Choose a section on the left.{% endif %}</p>
+        <div class="mt-8 grid gap-3 @md:grid-cols-2">
+          <a class="ds-jump" href="#color" data-ds-link="color"><strong>Color</strong><span class="ds-meta">Surfaces, text, status, charts.</span></a>
+          <a class="ds-jump" href="#typography" data-ds-link="typography"><strong>Typography</strong><span class="ds-meta">Scale, weights, and code.</span></a>
+          <a class="ds-jump" href="#identity" data-ds-link="identity"><strong>App Identity</strong><span class="ds-meta">Mark and name.</span></a>
+          <a class="ds-jump" href="#buttons" data-ds-link="buttons"><strong>Buttons</strong><span class="ds-meta">Variants, sizes, states.</span></a>
+          <a class="ds-jump" href="#links" data-ds-link="links"><strong>Links</strong><span class="ds-meta">Inline and structural.</span></a>
+          <a class="ds-jump" href="#inputs" data-ds-link="inputs"><strong>Inputs &amp; Forms</strong><span class="ds-meta">Fields, labels, validation.</span></a>
+          <a class="ds-jump" href="#selection" data-ds-link="selection"><strong>Selection Controls</strong><span class="ds-meta">Rows, checks, and marks.</span></a>
+          <a class="ds-jump" href="#labeling" data-ds-link="labeling"><strong>Tags, Badges &amp; Avatars</strong><span class="ds-meta">Status, tags, identity.</span></a>
+          <a class="ds-jump" href="#data" data-ds-link="data"><strong>Tables &amp; Lists</strong><span class="ds-meta">Records and empty states.</span></a>
+          <a class="ds-jump" href="#feedback" data-ds-link="feedback"><strong>Feedback</strong><span class="ds-meta">Status that is not the accent.</span></a>
+          <a class="ds-jump" href="#overlays" data-ds-link="overlays"><strong>Overlays &amp; Menus</strong><span class="ds-meta">Raised surfaces and dark.</span></a>
+        </div>
+      </article>
+
+      <article data-ds-panel="color" hidden>
+        <p class="ds-label mb-3">Foundations</p>
+        <h1 class="mb-3">Color</h1>
+        <p class="mb-8">Surfaces stay neutral. Color shows up as a mark, a status, or a chart — not as a wash behind content.</p>
+        <h2 class="mb-3">Surfaces</h2>
+        <div class="mb-8 grid grid-cols-2 gap-3 @md:grid-cols-3">
+          <div><div class="ds-swatch ds-swatch-canvas"></div><p class="ds-meta mt-2">Canvas</p></div>
+          <div><div class="ds-swatch ds-swatch-chrome"></div><p class="ds-meta mt-2">Chrome</p></div>
+          <div><div class="ds-swatch ds-swatch-well"></div><p class="ds-meta mt-2">Well</p></div>
+          <div><div class="ds-swatch ds-swatch-raised"></div><p class="ds-meta mt-2">Raised</p></div>
+          <div><div class="ds-swatch ds-swatch-overlay"></div><p class="ds-meta mt-2">Overlay</p></div>
+          <div><div class="ds-swatch ds-swatch-ink"></div><p class="ds-meta mt-2">Ink</p></div>
+        </div>
+        <h2 class="mb-3">Text</h2>
+        <p class="text-[var(--p-text-primary)]">Primary. Headings, body, and data.</p>
+        <p>Secondary. Labels and supporting text.</p>
+        <p class="ds-meta mb-8">Tertiary. Meta, timestamps, and captions.</p>
+        <h2 class="mb-3">Accent and status</h2>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="ds-mark" aria-hidden="true"></span>
+          <span class="ds-meta">Accent is a mark, not a fill.</span>
+        </div>
+        <div class="mb-3 flex flex-wrap gap-2">
+          <span class="ds-swatch ds-swatch-success !h-8 w-16"></span>
+          <span class="ds-swatch ds-swatch-warning !h-8 w-16"></span>
+          <span class="ds-swatch ds-swatch-danger !h-8 w-16"></span>
+          <span class="ds-swatch ds-swatch-info !h-8 w-16"></span>
+        </div>
+        <p class="ds-meta mb-6">Success, warning, danger, and info. Danger is not the accent.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="ds-chart ds-chart-0"></span>
+          <span class="ds-chart ds-chart-1"></span>
+          <span class="ds-chart ds-chart-2"></span>
+          <span class="ds-chart ds-chart-3"></span>
+          <span class="ds-chart ds-chart-4"></span>
+          <span class="ds-chart ds-chart-5"></span>
+          <span class="ds-chart ds-chart-6"></span>
+          <span class="ds-chart ds-chart-7"></span>
+          <span class="ds-chart ds-chart-8"></span>
+          <span class="ds-chart ds-chart-9"></span>
+        </div>
+      </article>
+
+      <article data-ds-panel="typography" hidden>
+        <p class="ds-label mb-3">Foundations</p>
+        <h1 class="mb-3">Typography</h1>
+        <p class="mb-8">One sans for the interface. Mono is for code only. Figures in data stay tabular.</p>
+        <p class="!text-[24px] !font-semibold !leading-tight !text-[var(--p-text-primary)]">Page title</p>
+        <p class="!text-[20px] !font-semibold !text-[var(--p-text-primary)]">Section title</p>
+        <p class="!text-[16px] !font-semibold !text-[var(--p-text-primary)]">Card title</p>
+        <p class="!text-[var(--p-text-primary)]">Default interface text.</p>
+        <p class="!text-[13px]">Dense body.</p>
+        <p class="ds-meta">Meta.</p>
+        <p class="ds-label mt-4">Overline</p>
+        <p class="ds-code">IBM Plex Mono — code only.</p>
+        <p class="ds-stat !text-[24px] !text-[var(--p-text-primary)]">1,284.00</p>
+      </article>
+
+      <article data-ds-panel="identity" hidden>
+        <p class="ds-label mb-3">Foundations</p>
+        <h1 class="mb-3">App Identity</h1>
+        <p class="mb-8">A mark and a name. The mark carries the accent. The name stays in the interface typeface.</p>
+        <div class="ds-panel flex items-center gap-3 p-4">
+          <span class="grid h-9 w-9 place-items-center rounded-md bg-[var(--p-ink)] text-[13px] font-semibold text-[var(--p-text-inverse)]">DS</span>
+          <span class="text-[15px] font-semibold text-[var(--p-text-primary)]">Design System</span>
+          <span class="ds-mark" aria-hidden="true"></span>
+        </div>
+      </article>
+
+      <article data-ds-panel="buttons" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Buttons</h1>
+        <p class="mb-8">One primary action per view, in ink. Accent never fills a button. Danger is a separate control.</p>
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          <button type="button" class="button">Save</button>
+          <button type="button" class="button-secondary">Cancel</button>
+          <button type="button" class="ds-btn ds-btn-ghost">Ghost</button>
+          <button type="button" class="ds-btn ds-btn-danger">Delete</button>
+          <button type="button" class="ds-btn ds-btn-danger-subtle">Remove</button>
+          <button type="button" class="ds-btn ds-btn-link">View record</button>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" class="button ds-btn-sm">Small</button>
+          <button type="button" class="button">Medium</button>
+          <button type="button" class="button ds-btn-lg">Large</button>
+          <button type="button" class="button" disabled>Disabled</button>
+        </div>
+      </article>
+
+      <article data-ds-panel="links" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Links</h1>
+        <p class="mb-8">Inline links use the accent. Structural links stay the text color.</p>
+        <p class="!text-[var(--p-text-primary)]">Read the <a href="#typography" data-ds-link="typography" class="!text-[var(--p-accent)] underline">type scale</a> before setting a title.</p>
+        <p class="mt-4"><a href="#overview" data-ds-link="overview" class="!text-[var(--p-text-primary)]">Back to overview</a></p>
+      </article>
+
+      <article data-ds-panel="inputs" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Inputs &amp; Forms</h1>
+        <p class="mb-8">The message line is always reserved, so an error changes color and not height.</p>
+        <div class="ds-panel p-5">
+          <div class="ds-formfield" data-state="error">
+            <label class="ds-formfield-label" for="ds-name">Name</label>
+            <input id="ds-name" type="text" value="" placeholder="Record name">
+            <p class="ds-formfield-msg">Enter a name to continue.</p>
+          </div>
+        </div>
+      </article>
+
+      <article data-ds-panel="selection" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Selection Controls</h1>
+        <p class="mb-8">A selected row is a neutral fill plus one accent mark.</p>
+        <div class="ds-row">
+          <span class="h-2 w-2 flex-none rounded-full border border-[var(--p-border-strong)]"></span>
+          <span class="text-[var(--p-text-primary)]">Unselected row</span>
+        </div>
+        <div class="ds-row is-selected">
+          <span class="ds-mark" aria-hidden="true"></span>
+          <span class="text-[var(--p-text-primary)]">Selected row</span>
+        </div>
+      </article>
+
+      <article data-ds-panel="labeling" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Tags, Badges &amp; Avatars</h1>
+        <p class="mb-8">Status color stays on the badge. Avatars stay neutral.</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="grid h-8 w-8 place-items-center rounded-full bg-[var(--p-bg-well)] text-[12px] font-semibold text-[var(--p-text-primary)]">AK</span>
+          <span class="rounded-md bg-[var(--p-success-bg)] px-2 py-1 text-[12px] font-medium text-[var(--p-success-text)]">Active</span>
+          <span class="rounded-md bg-[var(--p-warning-bg)] px-2 py-1 text-[12px] font-medium text-[var(--p-warning-text)]">Review</span>
+          <span class="rounded-md bg-[var(--p-danger-bg)] px-2 py-1 text-[12px] font-medium text-[var(--p-danger-text)]">Failed</span>
+          <span class="rounded-md border border-[var(--p-border-default)] px-2 py-1 text-[12px] font-medium text-[var(--p-text-secondary)]">Draft</span>
+        </div>
+      </article>
+
+      <article data-ds-panel="data" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Tables &amp; Lists</h1>
+        <p class="mb-8">Records use tabular figures. An empty list says what is missing.</p>
+        <div class="ds-panel overflow-hidden">
+          <div class="flex items-center justify-between border-b border-[var(--p-border-subtle)] px-4 py-3">
+            <span class="text-[13px] font-medium text-[var(--p-text-primary)]">North studio</span>
+            <span class="ds-stat text-[13px] text-[var(--p-text-secondary)]">12</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-[var(--p-border-subtle)] px-4 py-3">
+            <span class="text-[13px] font-medium text-[var(--p-text-primary)]">Archive</span>
+            <span class="ds-stat text-[13px] text-[var(--p-text-secondary)]">3</span>
+          </div>
+          <div class="px-4 py-6">
+            <p class="ds-meta">No records in this view.</p>
+          </div>
+        </div>
+      </article>
+
+      <article data-ds-panel="feedback" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Feedback</h1>
+        <p class="mb-8">Success, warning, and danger each have their own color. The accent is not an error.</p>
+        <div class="flex flex-col gap-2">
+          <p class="!m-0 rounded-md bg-[var(--p-success-bg)] px-3 py-2 !text-[13px] !text-[var(--p-success-text)]">Saved.</p>
+          <p class="!m-0 rounded-md bg-[var(--p-warning-bg)] px-3 py-2 !text-[13px] !text-[var(--p-warning-text)]">Review before publishing.</p>
+          <p class="!m-0 rounded-md bg-[var(--p-danger-bg)] px-3 py-2 !text-[13px] !text-[var(--p-danger-text)]">Could not save this record.</p>
+        </div>
+      </article>
+
+      <article data-ds-panel="overlays" hidden>
+        <p class="ds-label mb-3">Components</p>
+        <h1 class="mb-3">Overlays &amp; Menus</h1>
+        <p class="mb-8">Menus and dialogs sit on a raised surface. Dark is the same components with the tokens swapped.</p>
+        <div class="ds-panel mb-4 w-56 p-1">
+          <p class="!m-0 rounded-md px-2 py-1.5 !text-[13px] !text-[var(--p-text-primary)]">Rename</p>
+          <p class="!m-0 rounded-md bg-[var(--p-fill-selected)] px-2 py-1.5 !text-[13px] !text-[var(--p-text-primary)]">Duplicate</p>
+          <p class="!m-0 rounded-md px-2 py-1.5 !text-[13px] !text-[var(--p-danger-text)]">Delete</p>
+        </div>
+        <div class="ds-darkframe flex flex-col gap-3">
+          <p class="ds-label">Dark swap</p>
+          <p class="!text-[var(--p-text-primary)]">Same components. The tokens change.</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="button" class="button">Save</button>
+            <button type="button" class="button-secondary">Cancel</button>
+            <span class="ds-mark" aria-hidden="true"></span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+  </div>
+</section>
+<script>
+(function () {
+  var root = document.querySelector("[data-ds-docs]");
+  if (!root || root.getAttribute("data-ds-ready")) return;
+  root.setAttribute("data-ds-ready", "1");
+  document.documentElement.classList.add("ds-docs");
+
+  var links = root.querySelectorAll("[data-ds-link]");
+  var panels = root.querySelectorAll("[data-ds-panel]");
+
+  function idFromHash() {
+    var id = (location.hash || "#overview").replace("#", "");
+    return root.querySelector('[data-ds-panel="' + id + '"]') ? id : "overview";
+  }
+
+  function show(id) {
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-ds-panel") !== id;
+    });
+    links.forEach(function (link) {
+      var on = link.getAttribute("data-ds-link") === id;
+      link.classList.toggle("is-active", on);
+      if (on) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  }
+
+  root.addEventListener("click", function (event) {
+    var link = event.target.closest("[data-ds-link]");
+    if (!link || !root.contains(link)) return;
+    event.preventDefault();
+    var id = link.getAttribute("data-ds-link");
+    if (location.hash !== "#" + id) history.pushState(null, "", "#" + id);
+    show(id);
+    window.scrollTo(0, 0);
+  });
+
+  window.addEventListener("hashchange", function () {
+    show(idFromHash());
+  });
+
+  window.addEventListener("popstate", function () {
+    show(idFromHash());
+  });
+
+  show(idFromHash());
+})();
+</script>

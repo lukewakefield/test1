@@ -1,0 +1,88 @@
+---
+metadata:
+  name: Hands FAQ
+  class: section
+  category: content
+  lists:
+    - name: Questions
+      type: questions
+      fields:
+        - { id: question, type: text, label: Question, default: 'How quickly can we launch?', is_title: true }
+        - { id: answer, type: textarea, label: Answer, default: 'Most projects launch in four to six weeks. If you need something sooner, get in touch.' }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'FAQs' }
+    - { id: body, type: textarea, label: Body, default: 'Still have a question? Get in touch.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+{% capture hands_faq_id %}hands-faq-{% increment hands_faq_uid %}{% endcapture %}
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="grid gap-12 @lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] @lg:gap-20" data-motion-group>
+      <div data-motion-group>
+        <h2 data-motion-text>{{ this.heading | default: 'FAQs' }}</h2>
+        {% if this.body != blank %}
+          <p data-motion-text>{{ this.body }}</p>
+        {% endif %}
+      </div>
+      <div id="{{ hands_faq_id }}" data-accordion="collapse">
+        {% if lists.questions != blank %}
+        {% for item in lists.questions %}
+          <h3 data-studio-list="{{ item._list }}" class="!mb-0">
+            <button
+              type="button"
+              id="{{ hands_faq_id }}-heading-{{ forloop.index0 }}"
+              data-accordion-target="#{{ hands_faq_id }}-body-{{ forloop.index0 }}"
+              aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="{{ hands_faq_id }}-body-{{ forloop.index0 }}"
+              data-motion-text
+            >
+              <span>{{ item.question }}</span>
+              <span data-accordion-icon class="material-symbols-outlined shrink-0 text-[22px] leading-none" aria-hidden="true">expand_more</span>
+            </button>
+          </h3>
+          <div
+            id="{{ hands_faq_id }}-body-{{ forloop.index0 }}"
+            aria-labelledby="{{ hands_faq_id }}-heading-{{ forloop.index0 }}"
+            {% unless forloop.first %}class="hidden"{% endunless %}
+          >
+            <p data-motion-text>{{ item.answer }}</p>
+          </div>
+        {% endfor %}
+        {% else %}
+          <h3 class="!mb-0">
+            <button type="button" id="{{ hands_faq_id }}-heading-0" data-accordion-target="#{{ hands_faq_id }}-body-0" aria-expanded="true" aria-controls="{{ hands_faq_id }}-body-0">
+              <span>How quickly can we launch?</span>
+              <span data-accordion-icon class="material-symbols-outlined shrink-0 text-[22px] leading-none" aria-hidden="true">expand_more</span>
+            </button>
+          </h3>
+          <div id="{{ hands_faq_id }}-body-0" aria-labelledby="{{ hands_faq_id }}-heading-0">
+            <p>Most projects launch in four to six weeks.</p>
+          </div>
+          <h3 class="!mb-0">
+            <button type="button" id="{{ hands_faq_id }}-heading-1" data-accordion-target="#{{ hands_faq_id }}-body-1" aria-expanded="false" aria-controls="{{ hands_faq_id }}-body-1">
+              <span>What happens after launch?</span>
+              <span data-accordion-icon class="material-symbols-outlined shrink-0 text-[22px] leading-none" aria-hidden="true">expand_more</span>
+            </button>
+          </h3>
+          <div id="{{ hands_faq_id }}-body-1" class="hidden" aria-labelledby="{{ hands_faq_id }}-heading-1">
+            <p>Support stays available, either as a retainer or as the next sprint.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

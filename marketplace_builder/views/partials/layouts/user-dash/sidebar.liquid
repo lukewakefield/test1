@@ -1,0 +1,62 @@
+{%- comment -%}
+  User Dash sidebar. Renders one link per entry in `tabs`, highlighting
+  whichever matches `active_tab`. Links just set ?tab= on the current page.
+
+  Params:
+  tabs (required) — array of tab slugs, e.g. 'overview,profile,settings' | split: ','
+  active_tab (required) — the currently selected tab slug
+{%- endcomment -%}
+
+<aside class="w-full md:w-64 shrink-0">
+  <div class=" overflow-hidden">
+
+    <div class="px-5 py-5 bg-base-50 dark:bg-base-900 rounded-2xl border-base-200 dark:border-base-700 !mb-5">
+      <div class="flex items-center gap-3">
+
+        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800 shrink-0">
+          <span class="text-sm font-semibold text-primary-700 dark:text-primary-300">
+            {{ context.current_user.first_name | slice: 0, 1 | upcase }}
+          </span>
+        </div>
+
+        <div class="min-w-0">
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 !mb-0">
+            Hello,
+          </p>
+          <p class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate !mt-0">
+            {{ context.current_user.first_name }}
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <nav class="p-2 flex flex-row flex-wrap md:flex-col gap-1">
+      {%- for tab in tabs -%}
+        {%- assign tab_label = tab | replace: '-', ' ' | capitalize -%}
+
+        <a href="?tab={{ tab }}" class="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium transition-colors
+          {% if tab == active_tab %}
+            bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300
+          {% else %}
+            text-neutral-700 dark:text-neutral-300 hover:bg-base-100 dark:hover:bg-base-800 hover:text-neutral-900 dark:hover:text-neutral-100
+          {% endif %}">
+          <span class="w-1.5 h-1.5 rounded-full shrink-0
+            {% if tab == active_tab %}
+              bg-primary-600 dark:bg-primary-400
+            {% else %}
+              bg-neutral-300 dark:bg-neutral-600
+            {% endif %}">
+</span>
+
+          <span>{{ tab_label }}</span>
+        </a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="p-2 pt-0">
+      {%- include 'logout_button', layout: 'sidebar-logout', redirect: '/' -%}
+    </div>
+
+  </div>
+</aside>

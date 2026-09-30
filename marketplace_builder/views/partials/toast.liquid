@@ -1,0 +1,149 @@
+{%- comment -%}
+  Shared success/error toast (SweetAlert2), used by the add-to-cart buttons
+  and the wishlist toggle so they don't each duplicate the same swal.fire
+  config. Include this once wherever you need it (it's idempotent, guarded
+  via context.exports.sitebuilder), then call from an onclick handler:
+
+  show_toast('success', 'Added to favourites!')
+  show_toast('error', 'Something went wrong, please try again.')
+{%- endcomment -%}
+{% if context.exports.sitebuilder.sweetalert == blank %}
+  <script
+    id="sweetalert_script"
+    async
+    src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% assign sweetalert = true %}
+  {% export sweetalert
+    , namespace: "sitebuilder" %}
+{% endif %}
+
+{% if context.exports.sitebuilder.toast_js == blank %}
+  <style>
+    @keyframes sg-toast-in {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 8px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes sg-toast-out {
+      from {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        opacity: 0;
+        transform: translate3d(0, 5px, 0);
+      }
+    }
+  </style>
+
+  <script>
+    		function show_toast(icon, title) {
+    			function show() {
+    		Swal.fire({
+      position: 'bottom-end',
+      icon: icon,
+      title: title,
+      showConfirmButton: false,
+      showCloseButton: true,
+      timer: 2500,
+      timerProgressBar: false,
+      toast: true,
+
+      showClass: {
+    popup: 'animate-[sg-toast-in_180ms_ease-out]'
+      },
+
+      hideClass: {
+    popup: 'animate-[sg-toast-out_220ms_ease-in_forwards]'
+      },
+
+      customClass: {
+    popup: [
+      '!relative',
+      '!flex',
+      '!items-center',
+      '!w-auto',
+      '!min-w-[300px]',
+      '!max-w-[380px]',
+      '!min-h-[58px]',
+      '!p-3',
+      '!pr-10',
+      '!m-4',
+      '!rounded-xl',
+      '!border',
+      '!border-gray-200/80',
+      '!bg-white',
+      '!shadow-[0_8px_30px_rgba(0,0,0,0.08)]',
+      'dark:!border-gray-700/80',
+      'dark:!bg-gray-800',
+      'dark:!shadow-[0_8px_30px_rgba(0,0,0,0.25)]'
+    ].join(' '),
+
+    icon: [
+      '!m-0',
+      '!mr-3',
+      '!shrink-0'
+    ].join(' '),
+
+    title: [
+      '!m-0',
+      '!p-0',
+      '!text-sm',
+      '!font-medium',
+      '!leading-5',
+      '!text-gray-800',
+      '!text-left',
+      'dark:!text-gray-100'
+    ].join(' '),
+
+    closeButton: [
+      '!absolute',
+      '!right-2',
+      '!top-1/2',
+      '!-translate-y-1/2',
+      '!flex',
+      '!items-center',
+      '!justify-center',
+      '!w-6',
+      '!h-6',
+      '!m-0',
+      '!p-0',
+      '!rounded-md',
+      '!text-base',
+      '!font-normal',
+      '!leading-none',
+      '!text-gray-400',
+      'hover:!bg-gray-100',
+      'hover:!text-gray-700',
+      'dark:!text-gray-500',
+      'dark:hover:!bg-gray-700',
+      'dark:hover:!text-gray-200',
+      'transition-colors',
+      'duration-150'
+    ].join(' ')
+      }
+    });
+    			}
+
+    			if (typeof Swal !== 'undefined') {
+    				show();
+    			} else {
+    				const script = document.querySelector('#sweetalert_script');
+
+    				if (script) {
+    					script.addEventListener('load', show, { once: true });
+    				}
+    			}
+    		}
+  </script>
+
+  {% assign toast_js = true %}
+  {% export toast_js
+    , namespace: "sitebuilder" %}
+{% endif %}

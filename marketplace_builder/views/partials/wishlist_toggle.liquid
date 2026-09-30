@@ -1,0 +1,67 @@
+{%- comment -%}
+  Wishlist (favourites) toggle button. Expects `this` to be set to the
+  product record by the caller.
+
+  Uses the platform's native favourites feature rather than a custom one:
+  - Storage: the `favourite_items` array field on the User model (declared
+    in user.yml / views/partials/tables/systems/user.liquid).
+  - Client-side: window.user_add_to_favourites / user_remove_from_favourites,
+    confirmed by reading the live siteglide_secure_zones.js bundle. Each
+    takes [item_id, item_name, csrf_token, user_id] and POSTs to
+    /api/sz/user_favourites.json with {user_id, item_id, type: "add"|"remove"}.
+
+  Note: the POST body carries no table/module identifier, so which table
+  `item_id` resolves against is controlled by the `favourite_items`
+  datasource configuration in Siteglide Studio (Admin > Datasources) — that
+  needs to be set to Products for this to resolve correctly server-side.
+{%- endcomment -%}
+
+{% content_for 'siteglide_footer_scripts' %}
+	<script type="text/javascript" defer src="{{ 'modules/siteglide_secure_zones/js/siteglide_secure_zones.js' | asset_url }}"></script>,,
+{% endcontent_for %}
+
+{% include 'toast' %}
+
+{% if context.exports.sitebuilder.wishlist_toggle_js == blank %}
+	<script>
+		{%- comment -%}
+		  Replaces the core siteglide_secure_zones.js default success callback (a
+		  plain alert() + location.reload()) with the shared toast, then reloads
+		  so the button's add/remove state re-renders from the server.
+		{%- endcomment -%}
+		function wishlist_toggle_callback(action, itemName, refElement) {
+			show_toast('success', action == 'add' ? 'Added to favourites!' : 'Removed from favourites!');
+			setTimeout(function () { location.reload(); }, 2000);
+		}
+	</script>
+	{% assign wishlist_toggle_js = true %}
+	{% export wishlist_toggle_js, namespace: "sitebuilder" %}
+{% endif %}
+
+{%- if context.current_user.id != blank -%}
+  {%- assign favourite_ids = context.exports.current_user['Favourite Items'] -%}
+  {%- assign is_favourite = false -%}
+  {%- if favourite_ids contains this.id -%}
+    {%- assign is_favourite = true -%}
+  {%- endif -%}
+  {%- capture favourite_item_js -%}[{{ this.id }}, '{{ this.name | replace: "'", "\\'" }}', '{{ context.authenticity_token }}', '{{ context.current_user.id }}']{%- endcapture -%}
+
+  {%- if is_favourite -%}
+    <button
+      type="button"
+      class="button-secondary text-nowrap !bg-primary-900 text-primary-700 hover:bg-primary-200 hover:text-primary-800"
+      onclick="user_remove_from_favourites({{ favourite_item_js }}, wishlist_toggle_callback)"
+    >
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.7-4.35-9.33-8.2C.86 10.1 1.4 6.6 4.1 5.02c2.2-1.28 4.9-.66 6.4 1.25L12 8l1.5-1.73c1.5-1.9 4.2-2.53 6.4-1.25 2.7 1.58 3.24 5.08 1.43 7.78C18.7 16.65 12 21 12 21z"/></svg>
+    </button>
+  {%- else -%}
+    <button
+      type="button"
+      class="button-secondary text-nowrap"
+      onclick="user_add_to_favourites({{ favourite_item_js }}, wishlist_toggle_callback)"
+    >
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.7-4.35-9.33-8.2C.86 10.1 1.4 6.6 4.1 5.02c2.2-1.28 4.9-.66 6.4 1.25L12 8l1.5-1.73c1.5-1.9 4.2-2.53 6.4-1.25 2.7 1.58 3.24 5.08 1.43 7.78C18.7 16.65 12 21 12 21z"/></svg>
+
+    </button>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,122 @@
+---
+metadata:
+  name: Hands Hero
+  class: section
+  category: hero
+  lists:
+    - name: Proof Points
+      type: proof_points
+      fields:
+        - { id: label, type: text, label: Label, default: 'Launch in weeks', is_title: true }
+    - name: Avatars
+      type: avatars
+      fields:
+        - { id: image, type: image_picker, label: Image, default: '' }
+        - { id: image_alt, type: text, label: Image Alt, default: 'Team member', is_title: true }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'Websites that move as fast as the product.' }
+    - { id: body, type: textarea, label: Body, default: 'A design partner for teams who need a site they can launch, improve, and grow without waiting on a rebuild.' }
+    - { id: emphasis, type: text, label: Emphasised Phrase, default: 'launch, improve, and grow' }
+    - { id: proof_label, type: text, label: Proof Label, default: '12+ years experience' }
+    - { id: image, type: image_picker, label: Product Image, default: '' }
+    - { id: image_alt, type: text, label: Product Image Alt, default: 'Product preview' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components:
+    - name: Button
+      type: cta_button
+      fields:
+        - { id: button_title, type: text, label: Button Title, default: 'Get started', is_title: true }
+        - { id: button_link, type: text, label: Button Link, default: '#' }
+        - id: button_type
+          type: select
+          label: Button Type
+          default: button
+          options:
+            - { label: Button, value: button }
+            - { label: Button Secondary, value: button-secondary }
+      availableOn:
+        - fields
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="grid items-end gap-12 @lg:grid-cols-[minmax(0,1.4fr)_auto]" data-motion-group>
+      <div class="max-w-4xl" data-motion-group>
+        <h1 data-motion-text>{{ this.heading | default: 'Websites that move as fast as the product.' }}</h1>
+        {% assign hero_body = this.body | default: 'A design partner for teams who need a site they can launch, improve, and grow without waiting on a rebuild.' %}
+        {% assign hero_emphasis = this.emphasis | default: '' %}
+        <p class="max-w-xl" data-motion-text>
+          {% if hero_emphasis != blank and hero_body contains hero_emphasis %}
+            {{ hero_body | split: hero_emphasis | first }}<strong>{{ hero_emphasis }}</strong>{{ hero_body | split: hero_emphasis | last }}
+          {% else %}
+            {{ hero_body }}
+          {% endif %}
+        </p>
+        {% if components %}
+          <div class="mt-8 flex flex-wrap items-center gap-3" data-motion-group>
+            {% for component_item in components %}
+              {% assign component = component_item %}
+              {% if component_item[1] %}{% assign component = component_item[1] %}{% endif %}
+              {% assign component_data = component.data | default: component %}
+              {% if component_data.button_title != blank %}
+                {% assign button_class = 'button' %}
+                {% if component_data.button_type == 'button-secondary' %}{% assign button_class = 'button-secondary' %}{% endif %}
+                <a href="{{ component_data.button_link | default: '#' }}" class="{{ button_class }}">{{ component_data.button_title }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="mt-8 flex flex-wrap items-center gap-3" data-motion-group>
+            <a href="#" class="button">Get started</a>
+            <a href="#" class="button-secondary">Book a call</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="flex flex-col items-start gap-4 @lg:items-end" data-motion-group>
+        {% if this.proof_label != blank %}
+          <p class="!mb-0 text-sm font-medium text-neutral-50" data-motion-text>{{ this.proof_label }}</p>
+        {% endif %}
+        {% if lists.avatars != blank %}
+          <div class="flex -space-x-2" data-motion-group>
+            {% for item in lists.avatars %}
+              <span data-studio-list="{{ item._list }}" class="inline-flex h-10 w-10 overflow-hidden rounded-full border-2 border-base-950" data-motion-card>
+                {% if item.image != blank %}
+                  {% capture avatar_attributes %}alt="{{ item.image_alt | default: '' }}" loading="lazy"{% endcapture %}
+                  {% include 'img', path: item.image, layout: 'default/sm', width: '80', classes: '!h-10 !w-10 !rounded-full object-cover', attributes: avatar_attributes %}
+                {% endif %}
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if lists.proof_points != blank %}
+      <ul class="mt-10 flex flex-col gap-2 @sm:flex-row @sm:flex-wrap @sm:gap-x-8" data-motion-group>
+        {% for item in lists.proof_points %}
+          <li data-studio-list="{{ item._list }}" class="!mb-0 text-sm font-medium text-neutral-50" data-motion-text>{{ item.label }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if this.image != blank %}
+      <figure class="card mt-16 !mb-0 overflow-hidden !p-0" data-motion-card>
+        {% capture product_attributes %}alt="{{ this.image_alt | default: '' }}" loading="eager"{% endcapture %}
+        {% include 'img', path: this.image, layout: 'default/lg', classes: 'block h-auto w-full !rounded-none object-cover', attributes: product_attributes %}
+      </figure>
+    {% endif %}
+  </div>
+</section>

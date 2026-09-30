@@ -1,0 +1,65 @@
+---
+metadata:
+  name: Hands Problems
+  class: section
+  category: features
+  lists:
+    - name: Problems
+      type: problems
+      fields:
+        - { id: title, type: text, label: Title, default: 'Hard to change', is_title: true }
+        - { id: description, type: textarea, label: Description, default: 'Pages are built as one-offs, so every new idea takes longer to ship.' }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'The site was not built for how the team works now.' }
+    - { id: body, type: textarea, label: Body, default: 'The product moves every week. The website still waits on the next project.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-3xl" data-motion-group>
+      <h2 data-motion-text>{{ this.heading | default: 'The site was not built for how the team works now.' }}</h2>
+      {% if this.body != blank %}
+        <p data-motion-text>{{ this.body }}</p>
+      {% endif %}
+    </div>
+    <div class="mt-14 grid grid-cols-1 gap-4 @md:grid-cols-3" data-motion-group>
+      {% if lists.problems != blank %}
+        {% for item in lists.problems %}
+          <article data-studio-list="{{ item._list }}" class="card" data-motion-card>
+            <h3 data-motion-text>{{ item.title }}</h3>
+            {% if item.description != blank %}
+              <p data-motion-text>{{ item.description }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="card" data-motion-card>
+          <h3 data-motion-text>Developer dependent</h3>
+          <p data-motion-text>Every new page becomes another request for the development team.</p>
+        </article>
+        <article class="card" data-motion-card>
+          <h3 data-motion-text>Hard to change</h3>
+          <p data-motion-text>Pages are one-offs, so every new idea takes longer to ship.</p>
+        </article>
+        <article class="card" data-motion-card>
+          <h3 data-motion-text>Slow to grow</h3>
+          <p data-motion-text>The product moves quickly. The website struggles to keep up.</p>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>

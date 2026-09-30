@@ -1,0 +1,73 @@
+---
+metadata:
+  name: Hands Work
+  class: section
+  category: content
+  lists:
+    - name: Projects
+      type: projects
+      fields:
+        - { id: title, type: text, label: Title, default: 'Northwind', is_title: true }
+        - { id: summary, type: textarea, label: Summary, default: 'A marketing site the team can update without a developer.' }
+        - { id: image, type: image_picker, label: Image, default: '' }
+        - { id: image_alt, type: text, label: Image Alt, default: '' }
+        - { id: url, type: url, label: URL, default: '#' }
+  fields:
+    - { id: eyebrow, type: text, label: Eyebrow, default: 'Recent projects' }
+    - { id: heading, type: textarea, label: Heading, default: 'You are in good company.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="mb-12 max-w-3xl" data-motion-group>
+      {% if this.eyebrow != blank %}
+        <p class="eyebrow_text" data-motion-text>{{ this.eyebrow }}</p>
+      {% endif %}
+      <h2 data-motion-text>{{ this.heading | default: 'You are in good company.' }}</h2>
+    </div>
+    <div class="grid grid-cols-1 gap-6 @md:grid-cols-2" data-motion-group>
+      {% if lists.projects != blank %}
+      {% for item in lists.projects %}
+        <article data-studio-list="{{ item._list }}" class="card !p-0 overflow-hidden" data-motion-card>
+          {% if item.image != blank %}
+            {% capture work_attributes %}alt="{{ item.image_alt | default: item.title | default: '' }}" loading="lazy"{% endcapture %}
+            {% include 'img', path: item.image, layout: 'default/lg', classes: 'aspect-[16/10] h-auto w-full !rounded-none object-cover', attributes: work_attributes %}
+          {% endif %}
+          <div class="p-6 @md:p-8">
+            <h3 data-motion-text>{{ item.title }}</h3>
+            {% if item.summary != blank %}
+              <p data-motion-text>{{ item.summary }}</p>
+            {% endif %}
+            {% if item.url != blank %}
+              <a href="{{ item.url }}">View project</a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+      {% else %}
+        <article class="card" data-motion-card>
+          <h3>Northwind</h3>
+          <p>A marketing site the team can update without opening a ticket.</p>
+        </article>
+        <article class="card" data-motion-card>
+          <h3>Harbor</h3>
+          <p>A product site built as a system, so the next page is the easy part.</p>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>

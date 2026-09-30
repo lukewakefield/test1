@@ -1,0 +1,55 @@
+---
+metadata:
+  name: Hands Letter
+  class: section
+  category: content
+  lists:
+    - name: Paragraphs
+      type: paragraphs
+      fields:
+        - { id: text, type: textarea, label: Paragraph, default: 'Great design is not a one-off. It is something a team keeps working on.', is_title: true }
+  fields:
+    - { id: eyebrow, type: text, label: Eyebrow, default: 'A note' }
+    - { id: heading, type: textarea, label: Heading, default: 'Design is the advantage that compounds.' }
+    - { id: signature_name, type: text, label: Signature Name, default: 'Studio' }
+    - { id: signature_role, type: text, label: Signature Role, default: 'Design partner' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-2xl" data-motion-group>
+      {% if this.eyebrow != blank %}
+        <p class="eyebrow_text" data-motion-text>{{ this.eyebrow }}</p>
+      {% endif %}
+      <h2 data-motion-text>{{ this.heading | default: 'Design is the advantage that compounds.' }}</h2>
+      {% for item in lists.paragraphs %}
+        <p data-studio-list="{{ item._list }}" data-motion-text>{{ item.text }}</p>
+      {% else %}
+        <p data-motion-text>Building the product used to be the hard part. That is no longer true.</p>
+        <p data-motion-text>The sites that win are the ones a team can keep improving, week after week, without starting over.</p>
+      {% endfor %}
+      {% if this.signature_name != blank %}
+        <p class="!mt-10 !mb-0 text-sm font-medium text-neutral-50" data-motion-text>
+          {{ this.signature_name }}
+          {% if this.signature_role != blank %}
+            <span class="mt-1 block font-normal text-white/55">{{ this.signature_role }}</span>
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</section>

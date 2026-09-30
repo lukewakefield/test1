@@ -1,0 +1,17 @@
+# Local Siteglide credentials and connection state
+.siteglide-config
+.siteglide/
+.env
+.env.*
+!.env.example
+# Local editor and MCP configurations
+.mcp.json
+.cursor/
+.vscode/
+.claude/
+.codex/
+.windsurf/
+# Generated files
+node_modules/
+.DS_Store
+*.log

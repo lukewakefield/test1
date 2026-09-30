@@ -1,0 +1,35 @@
+---
+layout: templates/2
+max_deep_level: 1
+metadata:
+  id: 404
+  name: 404-NotFound
+  studio:
+    order:
+    - 404-error
+    sections:
+      404-error:
+        data:
+          body: The page you're looking for doesn't exist or may have been moved.
+            Let's get you back on track.
+          eyebrow: Error 404
+          heading: Page not found
+          button_url: "/"
+          button_text: Back to Home
+        type: 404-error
+        lists: {}
+        system:
+          section_name: 404 Error
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: system_page
+redirect_to: ''
+redirect_url: ''
+slug: '404'
+---
+{% include 'modules/siteglide_system/constants' -%}
+
+{% include 'modules/module_357/render_page' %}

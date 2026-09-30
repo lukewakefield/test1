@@ -1,0 +1,27 @@
+---
+metadata:
+  studio_theme: studiokit
+  studio_library: studiokit
+  studio_dynamic/type: default
+  studio_dynamic/files:
+  - views/partials/layouts/modules/module_5/log_out/sidebar-logout.liquid
+  studio_dynamic/theme: studiokit
+  studio_dynamic/layout: sidebar-logout
+  studio_dynamic/theme_id: theme_01
+  studio_dynamic/module_id: module_5
+  studio_dynamic/layout_name: Sidebar logout
+  studio_dynamic/live_updates: 'false'
+  studio_dynamic/ui_framework: tailwind
+  studio_dynamic/original_name: Sidebar logout
+  studio_dynamic/sub_module_id: '2'
+  studio_dynamic/make_global_form: false
+---
+{% form -%}
+  <button
+    type="button"
+    class="flex w-full items-center !bg-transparent gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium !text-danger-500 transition-colors hover:bg-base-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-base-800 dark:hover:text-neutral-100"
+    onclick="siteglide_logout_process(this,'{{_redirect}}')">
+    <span class="material-symbols-outlined text-lg leading-none">logout</span>
+    <span>Log Out</span>
+  </button>
+{%- endform %}

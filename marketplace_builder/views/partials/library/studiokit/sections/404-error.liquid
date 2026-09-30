@@ -1,0 +1,84 @@
+---
+metadata:
+  name: 404 Error
+  class: section
+  lists: []
+  fields:
+  - id: eyebrow
+    type: text
+    label: Eyebrow
+    default: Error 404
+  - id: heading
+    type: textarea
+    label: Heading
+    default: Page not found
+  - id: body
+    type: textarea
+    label: Body
+    default: The page you're looking for doesn't exist or may have been moved. Let's
+      get you back on track.
+  - id: button_text
+    type: text
+    label: Button Text
+    default: Back to Home
+  - id: button_url
+    type: url
+    label: Button URL
+    default: "/"
+  hide_on: []
+  category: error
+  requires: []
+  settings: []
+  collection: studiokit
+  components: []
+---
+<section class="@container {{selection-index}}" data-motion-group>
+  <div class="container flex min-h-[70vh] flex-col items-center justify-center text-center">
+
+    <div
+      class="box-border relative mb-8 h-[237.5px] w-[338.75px] text-[var(--color-primary-500)]"
+      data-motion-card
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 137.5 149.5"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="box-border absolute left-0 top-0 h-[149.5px] w-[137.5px] overflow-visible [z-index:0]"
+      >
+        <path
+          d="M137.5 66.5l-38 83-31.75-76.5-49.5 0-18.25-15 0-27.25 52.75-30.5c0 0.5 49.5 0.75 49.5-0.25l35.25 66.5z"
+          fill="currentColor"
+        ></path>
+      </svg>
+      <svg
+        viewBox="0 0 239.25 169.5"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="box-border absolute left-[99.5px] top-[68px] h-[169.5px] w-[239.25px] overflow-visible [z-index:1]"
+      >
+        <path
+          d="M211 96.25l0 0 28.25-9.5 0 40-86.75 0 3.75 42.75-41.5 0-26.5-62 1 19.25-29.75 0-17.25 42.75-42.25 0 8-72.25 32.25-97.25 102.25 26 68.5 70.75 0-0.5z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+
+    {% if this.eyebrow != blank %}
+      <p class="eyebrow_text" data-motion-text>{{ this.eyebrow }}</p>
+    {% endif %}
+
+    <h2 data-motion-text>{{ this.heading }}</h2>
+
+    {% if this.body != blank %}
+      <p class="mx-auto max-w-xl" data-motion-text>{{ this.body }}</p>
+    {% endif %}
+
+    {% if this.button_text != blank %}
+      <div class="mt-8" data-motion-group>
+        <a href="{{ this.button_url }}" class="button">{{ this.button_text }}</a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>

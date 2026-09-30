@@ -1,0 +1,21 @@
+---
+layout: templates/1
+metadata:
+  name: User Dashboard
+  enabled: true
+  file_type: page
+  last_edit: 1789375336250
+redirect_to: ''
+redirect_url: ''
+---
+{% include 'modules/siteglide_system/constants' -%}
+{%- if context.current_user.id == blank -%}
+  <section class="py-10">
+    <div class="container max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <p class="mb-4">Please log in to view your dashboard.</p>
+      {%- include 'login_form' -%}
+    </div>
+  </section>
+{%- else -%}
+  {%- include 'layouts/user-dash/wrapper' -%}
+{%- endif -%}

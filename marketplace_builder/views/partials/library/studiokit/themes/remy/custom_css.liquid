@@ -1,0 +1,683 @@
+/* Agency landing system.
+   Light tokens point at the color scales in config.liquid.
+   Canvas is warm grey, the primary action is orange, the nav action is ink. */
+
+html {
+  --p-font-ui: var(--font-body), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --p-font-code: var(--font-code), 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --p-bg-canvas: var(--color-base-50);
+  --p-bg-chrome: var(--color-base-100);
+  --p-bg-well: var(--color-base-200);
+  --p-bg-raised: #ffffff;
+  --p-bg-overlay: #ffffff;
+  --p-border-subtle: var(--color-base-300);
+  --p-border-default: var(--color-base-400);
+  --p-border-strong: var(--color-base-500);
+
+  --p-text-primary: var(--color-neutral-900);
+  --p-text-secondary: var(--color-neutral-600);
+  --p-text-tertiary: var(--color-neutral-500);
+  --p-text-placeholder: var(--color-neutral-400);
+  --p-text-disabled: var(--color-neutral-400);
+  --p-text-inverse: #ffffff;
+
+  --p-accent: var(--color-primary-500);
+  --p-accent-hover: var(--color-primary-600);
+  --p-accent-pressed: var(--color-primary-700);
+  --p-accent-tint: rgba(242, 101, 34, 0.1);
+  --p-accent-tint-border: rgba(242, 101, 34, 0.28);
+
+  --p-action-primary: var(--color-primary-500);
+  --p-action-primary-hover: var(--color-primary-600);
+  --p-ink: var(--color-secondary-500);
+  --p-ink-hover: var(--color-secondary-600);
+  --p-ink-muted: #9ca3af;
+  --p-fill-hover: rgba(20, 20, 20, 0.04);
+  --p-fill-active: rgba(20, 20, 20, 0.08);
+  --p-fill-selected: rgba(20, 20, 20, 0.05);
+  --p-fill-selected-hover: rgba(20, 20, 20, 0.08);
+  --p-ring: var(--color-primary-500);
+
+  --p-danger-solid: var(--color-danger-500);
+  --p-danger-text: var(--color-danger-700);
+  --p-danger-hover: var(--color-danger-600);
+  --p-danger-active: var(--color-danger-800);
+  --p-danger-bg: var(--color-danger-100);
+  --p-warning-solid: var(--color-warning-500);
+  --p-warning-text: var(--color-warning-700);
+  --p-warning-bg: var(--color-warning-100);
+  --p-success-solid: var(--color-success-500);
+  --p-success-text: var(--color-success-700);
+  --p-success-bg: var(--color-success-100);
+  --p-info-solid: var(--color-info-500);
+  --p-info-text: var(--color-info-600);
+  --p-info-bg: var(--color-info-100);
+
+  --p-radius-control: 9999px;
+  --p-surface-hover: #f4f4f4;
+  --p-surface-active: #ececec;
+  --p-focus-ring: rgba(242, 101, 34, 0.28);
+  --p-danger-ring: rgba(218, 58, 45, 0.22);
+  --p-shadow-sm: 0 1px 2px rgba(20, 20, 20, 0.05);
+  --p-shadow-md: 0 4px 12px rgba(20, 20, 20, 0.08), 0 1px 3px rgba(20, 20, 20, 0.06);
+  --p-shadow-lg: 0 16px 48px rgba(20, 20, 20, 0.16), 0 4px 12px rgba(20, 20, 20, 0.08);
+  --p-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --p-chart-0: #2ecaa8;
+  --p-chart-1: #f7b731;
+  --p-chart-2: #f78b4a;
+  --p-chart-3: #e84393;
+  --p-chart-4: #8854d0;
+  --p-chart-5: #3490de;
+  --p-chart-6: #20b2d4;
+  --p-chart-7: #5fd4bc;
+  --p-chart-8: #f0c050;
+  --p-chart-9: #eb8a62;
+
+  color-scheme: light;
+  font-family: var(--p-font-ui);
+  color: var(--p-text-primary);
+  background: var(--p-bg-canvas);
+}
+
+html.dark,
+.ds-darkframe {
+  --p-bg-canvas: #141414;
+  --p-bg-chrome: #101010;
+  --p-bg-raised: #1c1c1c;
+  --p-bg-well: #0e0e0e;
+  --p-bg-overlay: #232323;
+  --p-border-subtle: #242424;
+  --p-border-default: #2c2c2c;
+  --p-border-strong: #3a3a3a;
+  --p-text-primary: #fafafa;
+  --p-text-secondary: #9a9a9a;
+  --p-text-tertiary: #6e6e6e;
+  --p-text-placeholder: #5c5c5c;
+  --p-text-disabled: #454545;
+  --p-text-inverse: #111827;
+  --p-accent: #ff7a3d;
+  --p-accent-hover: #ff9a6a;
+  --p-accent-pressed: #f26522;
+  --p-accent-tint: rgba(242, 101, 34, 0.16);
+  --p-accent-tint-border: rgba(242, 101, 34, 0.32);
+  --p-action-primary: #f26522;
+  --p-action-primary-hover: #ff7a3d;
+  --p-ink: #fafafa;
+  --p-ink-hover: #e5e7eb;
+  --p-ink-muted: #4b5563;
+  --p-fill-hover: rgba(255, 255, 255, 0.05);
+  --p-fill-active: rgba(255, 255, 255, 0.09);
+  --p-fill-selected: rgba(255, 255, 255, 0.06);
+  --p-fill-selected-hover: rgba(255, 255, 255, 0.09);
+  --p-ring: #e0726f;
+  --p-danger-solid: #e8584b;
+  --p-danger-text: #f19389;
+  --p-danger-hover: #d14a3d;
+  --p-danger-active: #be3f33;
+  --p-danger-bg: #2a1412;
+  --p-warning-solid: #d9a23c;
+  --p-warning-text: #e6be6a;
+  --p-warning-bg: #2a2310;
+  --p-success-solid: #3fb07a;
+  --p-success-text: #7fcb9e;
+  --p-success-bg: #16271e;
+  --p-info-solid: #6e6e6e;
+  --p-info-text: #9a9a9a;
+  --p-info-bg: #101010;
+  --p-surface-hover: #202020;
+  --p-surface-active: #262626;
+  --p-focus-ring: rgba(224, 114, 111, 0.36);
+  --p-danger-ring: rgba(232, 88, 75, 0.28);
+  --p-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --p-shadow-md: 0 6px 16px rgba(0, 0, 0, 0.55);
+  --p-shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.7);
+  --p-chart-0: #34d8b4;
+  --p-chart-1: #e0a82e;
+  --p-chart-2: #e8844a;
+  --p-chart-3: #d94088;
+  --p-chart-4: #9b6de0;
+  --p-chart-5: #4aa3eb;
+  --p-chart-6: #2cc4e0;
+  --p-chart-7: #6ee0c8;
+  --p-chart-8: #dbb248;
+  --p-chart-9: #d98060;
+  color-scheme: dark;
+  background: var(--p-bg-canvas);
+  color: var(--p-text-primary);
+}
+
+@layer base {
+  body,
+  .body {
+    background: var(--p-bg-canvas);
+    color: var(--p-text-primary);
+    font-family: var(--p-font-ui);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-family: var(--font-heading), var(--p-font-ui);
+    font-weight: 500;
+    color: var(--p-text-primary);
+    text-transform: none;
+  }
+
+  h1, .h1 {
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  h2, .h2 {
+    font-size: clamp(1.75rem, 4vw, 3.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+  }
+
+  h3, .h3, h4, .h4 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  h5, .h5, h6, .h6 {
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  p, .p {
+    color: var(--p-text-primary);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: inherit;
+  }
+
+  mark {
+    background: transparent;
+    color: var(--p-accent);
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+  textarea,
+  select {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--p-radius-control);
+    border: 1px solid var(--p-border-default);
+    background: var(--p-bg-raised);
+    color: var(--p-text-primary);
+    font-family: var(--p-font-ui);
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: none;
+  }
+
+  textarea {
+    height: auto;
+    min-height: 76px;
+    padding: 8px 12px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--p-text-placeholder);
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):hover,
+  textarea:hover,
+  select:hover {
+    border-color: var(--p-border-strong);
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--p-accent);
+    box-shadow: 0 0 0 3px var(--p-focus-ring);
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .eyebrow_text {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--p-text-tertiary);
+  }
+
+  .button,
+  .button-secondary,
+  .button-ink,
+  .ds-btn {
+    height: auto;
+    min-height: 44px;
+    padding: 8px 8px 8px 22px;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--p-font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
+  }
+
+  .button,
+  .ds-btn-primary {
+    background: var(--p-action-primary);
+    color: #ffffff;
+    border-color: var(--p-action-primary);
+  }
+
+  .button:hover,
+  .ds-btn-primary:hover {
+    background: var(--p-action-primary-hover);
+    border-color: var(--p-action-primary-hover);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .button-secondary,
+  .ds-btn-secondary {
+    background: var(--p-bg-raised);
+    color: var(--p-action-primary);
+    border-color: var(--p-action-primary);
+  }
+
+  .button-secondary:hover,
+  .ds-btn-secondary:hover {
+    background: var(--p-accent-tint);
+    border-color: var(--p-accent-hover);
+    color: var(--p-accent-hover);
+    text-decoration: none;
+  }
+
+  .button-ink {
+    background: var(--p-ink);
+    color: var(--p-text-inverse);
+    border-color: var(--p-ink);
+    font-size: 13px;
+    padding: 6px 6px 6px 18px;
+  }
+
+  .button-ink:hover {
+    background: var(--p-ink-hover);
+    border-color: var(--p-ink-hover);
+    color: var(--p-text-inverse);
+    text-decoration: none;
+  }
+
+  .ds-btn-ghost {
+    background: transparent;
+    color: var(--p-text-primary);
+  }
+
+  .ds-btn-ghost:hover {
+    background: var(--p-fill-hover);
+    color: var(--p-text-primary);
+    text-decoration: none;
+  }
+
+  .ds-btn-danger {
+    background: var(--p-danger-solid);
+    color: #ffffff;
+    border-color: var(--p-danger-solid);
+  }
+
+  .ds-btn-danger:hover {
+    background: var(--p-danger-hover);
+    border-color: var(--p-danger-hover);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .ds-btn-danger-subtle {
+    background: transparent;
+    color: var(--p-danger-text);
+  }
+
+  .ds-btn-danger-subtle:hover {
+    background: var(--p-danger-bg);
+    color: var(--p-danger-text);
+    text-decoration: none;
+  }
+
+  .ds-btn-link {
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--p-accent);
+  }
+
+  .ds-btn-link:hover {
+    color: var(--p-accent-hover);
+    text-decoration: underline;
+  }
+
+  .button:focus-visible,
+  .button-secondary:focus-visible,
+  .ds-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--p-focus-ring);
+  }
+
+  .ds-btn-danger:focus-visible,
+  .ds-btn-danger-subtle:focus-visible {
+    box-shadow: 0 0 0 3px var(--p-danger-ring);
+  }
+
+  .button:disabled,
+  .ds-btn-primary:disabled,
+  .ds-btn-danger:disabled {
+    background: var(--p-bg-well);
+    color: var(--p-text-disabled);
+    border-color: var(--p-border-default);
+    cursor: not-allowed;
+  }
+
+  .ds-btn-sm {
+    height: 28px;
+    padding: 0 10px;
+  }
+
+  .ds-btn-lg {
+    height: 38px;
+    padding: 0 18px;
+    font-size: 14px;
+  }
+
+  .card {
+    background: var(--p-bg-raised);
+    color: var(--p-text-primary);
+    border: 1px solid var(--p-border-default);
+    border-radius: 8px;
+    box-shadow: var(--p-shadow-sm);
+  }
+
+  .ds-swatch {
+    height: 72px;
+    border-radius: var(--p-radius-control);
+    border: 1px solid var(--p-border-default);
+  }
+
+  .ds-swatch-canvas { background: var(--p-bg-canvas); }
+  .ds-swatch-chrome { background: var(--p-bg-chrome); }
+  .ds-swatch-well { background: var(--p-bg-well); }
+  .ds-swatch-raised { background: var(--p-bg-raised); }
+  .ds-swatch-overlay { background: var(--p-bg-overlay); }
+  .ds-swatch-accent { background: var(--p-accent); }
+  .ds-swatch-ink { background: var(--p-action-primary); }
+  .ds-swatch-danger { background: var(--p-danger-solid); }
+  .ds-swatch-warning { background: var(--p-warning-solid); }
+  .ds-swatch-success { background: var(--p-success-solid); }
+  .ds-swatch-info { background: var(--p-info-solid); }
+
+  .ds-chart {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+  }
+
+  .ds-chart-0 { background: var(--p-chart-0); }
+  .ds-chart-1 { background: var(--p-chart-1); }
+  .ds-chart-2 { background: var(--p-chart-2); }
+  .ds-chart-3 { background: var(--p-chart-3); }
+  .ds-chart-4 { background: var(--p-chart-4); }
+  .ds-chart-5 { background: var(--p-chart-5); }
+  .ds-chart-6 { background: var(--p-chart-6); }
+  .ds-chart-7 { background: var(--p-chart-7); }
+  .ds-chart-8 { background: var(--p-chart-8); }
+  .ds-chart-9 { background: var(--p-chart-9); }
+
+  .ds-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--p-text-tertiary);
+  }
+
+  .ds-meta {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--p-text-secondary);
+  }
+
+  .ds-code {
+    font-family: var(--p-font-code);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--p-text-primary);
+  }
+
+  .ds-formfield {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ds-formfield-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--p-text-primary);
+  }
+
+  .ds-formfield-msg {
+    min-height: 18px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--p-text-secondary);
+  }
+
+  .ds-formfield[data-state="error"] input,
+  .ds-formfield[data-state="error"] textarea {
+    border-color: var(--p-danger-solid);
+  }
+
+  .ds-formfield[data-state="error"] .ds-formfield-msg {
+    color: var(--p-danger-text);
+  }
+
+  .ds-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--p-radius-control);
+    color: var(--p-text-primary);
+    font-size: 14px;
+  }
+
+  .ds-row.is-selected {
+    background: var(--p-fill-selected);
+  }
+
+  .ds-mark {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 999px;
+    background: var(--p-accent);
+  }
+
+  .ds-panel {
+    background: var(--p-bg-raised);
+    border: 1px solid var(--p-border-default);
+    border-radius: 8px;
+    box-shadow: var(--p-shadow-sm);
+  }
+
+  .ds-darkframe {
+    border-radius: 8px;
+    border: 1px solid var(--p-border-default);
+    padding: 20px;
+  }
+
+  .ds-stat {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+html.ds-docs [data-ui-kit-nav],
+html.ds-docs footer {
+  display: none;
+}
+
+.ds-shell {
+  background: var(--p-bg-raised);
+  color: var(--p-text-primary);
+}
+
+.ds-shell h1 {
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.ds-shell h2 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.ds-shell p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--p-text-secondary);
+}
+
+.ds-nav nav a {
+  display: block;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--p-text-primary);
+}
+
+.ds-nav nav a.is-active {
+  background: var(--p-ink);
+  color: var(--p-text-inverse);
+}
+
+.ds-nav-label {
+  padding: 14px 10px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--p-text-tertiary);
+}
+
+.ds-jump {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid var(--p-border-default);
+  border-radius: 8px;
+  background: var(--p-bg-raised);
+  color: var(--p-text-primary);
+}
+
+.ds-jump strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--p-text-primary);
+}
+
+.ds-shell .button,
+.ds-shell .button-secondary,
+.ds-shell .ds-btn {
+  min-height: 32px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.ds-shell .button {
+  background: var(--p-ink);
+  border-color: var(--p-ink);
+  color: var(--p-text-inverse);
+}
+
+.ds-shell .button:hover {
+  background: var(--p-ink-hover);
+  border-color: var(--p-ink-hover);
+  color: var(--p-text-inverse);
+}
+
+.ds-shell .button-secondary {
+  background: var(--p-bg-raised);
+  color: var(--p-text-primary);
+  border-color: var(--p-border-strong);
+}
+
+.ds-shell .button-secondary:hover {
+  background: var(--p-surface-hover);
+  border-color: var(--p-border-strong);
+  color: var(--p-text-primary);
+}
+
+.ds-shell .button.ds-btn-sm {
+  height: 28px;
+  min-height: 28px;
+}
+
+.ds-shell .button.ds-btn-lg {
+  height: 38px;
+  min-height: 38px;
+}
+
+.ds-shell .button:disabled {
+  background: var(--p-bg-well);
+  color: var(--p-text-disabled);
+  border-color: var(--p-border-default);
+}

@@ -1,0 +1,47 @@
+{%- comment -%}
+  Basic profile details layout for the User Dash "Profile" tab. Rendered via
+  {% include 'user_details', layout: 'user-dash' %}, which core-scopes `this`
+  to the currently logged-in user (see default.liquid in this same folder).
+{%- endcomment -%}
+<div class="bg-base-50 dark:bg-base-900 border border-base-200 dark:border-base-700 rounded-xl p-6">
+  <div class="flex items-center gap-4 pb-6 border-b border-base-200 dark:border-base-700">
+
+    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/30 border border-primary-100 dark:border-primary-800 shrink-0">
+      <span class="text-lg font-semibold text-primary-700 dark:text-primary-300">
+        {{ this.name | slice: 0, 1 | upcase }}
+      </span>
+    </div>
+
+    <div class="min-w-0">
+      <h2 class="text-xl font-semibold text-neutral-900 dark:text-neutral-100 truncate">
+        {{ this.name }}
+      </h2>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400 truncate">
+        {{ this.email }}
+      </p>
+    </div>
+
+  </div>
+
+  <dl class="grid gap-5 sm:grid-cols-2 pt-6">
+
+    <div>
+      <dt class="text-xs font-medium uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+        Email
+      </dt>
+      <dd class="mt-1 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+        {{ this.email }}
+      </dd>
+    </div>
+
+    <div>
+      <dt class="text-xs font-medium uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+        Member Since
+      </dt>
+      <dd class="mt-1 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+        {{ this.created_at | date: '%d/%m/%Y' }}
+      </dd>
+    </div>
+
+  </dl>
+</div>

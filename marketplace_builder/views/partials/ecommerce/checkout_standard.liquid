@@ -1,0 +1,7 @@
+{% if context.exports.sitebuilder.siteglide_ecommerce_js != true %}
+	<script src="{{ 'modules/siteglide_ecommerce/js/siteglide_ecommerce.js' | asset_url }}"></script>
+	{% assign siteglide_ecommerce_js = true %}
+	{% export siteglide_ecommerce_js, namespace: "sitebuilder" %}
+{% endif %}
+
+{% include 'modules/siteglide_ecommerce/ecommerce/checkout_standard' -%}

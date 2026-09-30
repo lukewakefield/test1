@@ -1,0 +1,117 @@
+---
+metadata:
+  name: Hands Pricing
+  class: section
+  category: pricing
+  lists:
+    - name: Plans
+      type: plans
+      fields:
+        - { id: name, type: text, label: Name, default: 'Website sprint', is_title: true }
+        - { id: price, type: text, label: Price, default: 'From $6,000' }
+        - { id: summary, type: textarea, label: Summary, default: 'A fixed scope for teams with a launch date.' }
+        - { id: features, type: textarea, label: Features, default: 'Strategy | Design system | Build and launch' }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'A partner who stays after launch.' }
+    - { id: body, type: textarea, label: Body, default: 'A fixed sprint, or an ongoing partnership. Both are built to last longer than the first release.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components:
+    - name: Button
+      type: cta_button
+      fields:
+        - { id: button_title, type: text, label: Button Title, default: 'Get started', is_title: true }
+        - { id: button_link, type: text, label: Button Link, default: '#' }
+        - id: button_type
+          type: select
+          label: Button Type
+          default: button
+          options:
+            - { label: Button, value: button }
+            - { label: Button Secondary, value: button-secondary }
+      availableOn:
+        - plans
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-3xl" data-motion-group>
+      <h2 data-motion-text>{{ this.heading | default: 'A partner who stays after launch.' }}</h2>
+      {% if this.body != blank %}
+        <p data-motion-text>{{ this.body }}</p>
+      {% endif %}
+    </div>
+    <div class="mt-14 grid grid-cols-1 gap-6 @lg:grid-cols-2" data-motion-group>
+      {% if lists.plans != blank %}
+      {% for item in lists.plans %}
+        <article data-studio-list="{{ item._list }}" class="card flex flex-col" data-motion-card>
+          <h3 data-motion-text>{{ item.name }}</h3>
+          {% if item.price != blank %}
+            <p class="!mb-2 text-3xl font-medium text-neutral-50" data-motion-text>{{ item.price }}</p>
+          {% endif %}
+          {% if item.summary != blank %}
+            <p data-motion-text>{{ item.summary }}</p>
+          {% endif %}
+          {% if item.features != blank %}
+            <ul class="mt-6">
+              {% assign feature_lines = item.features | split: '|' %}
+              {% for line in feature_lines %}
+                {% assign feature = line | strip %}
+                {% if feature != blank %}
+                  <li>{{ feature }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if item.components %}
+            <div class="mt-8 flex flex-wrap gap-3">
+              {% for component_item in item.components %}
+                {% assign component = component_item %}
+                {% if component_item[1] %}{% assign component = component_item[1] %}{% endif %}
+                {% assign component_data = component.data | default: component %}
+                {% if component_data.button_title != blank %}
+                  {% assign button_class = 'button' %}
+                  {% if component_data.button_type == 'button-secondary' %}{% assign button_class = 'button-secondary' %}{% endif %}
+                  <a href="{{ component_data.button_link | default: '#' }}" class="{{ button_class }}">{{ component_data.button_title }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+      {% else %}
+        <article class="card flex flex-col" data-motion-card>
+          <h3>Website sprint</h3>
+          <p class="!mb-2 text-3xl font-medium text-neutral-50">From $6,000</p>
+          <p>A fixed scope for teams with a launch date.</p>
+          <ul class="mt-6">
+            <li>Strategy</li>
+            <li>Design system</li>
+            <li>Build and launch</li>
+          </ul>
+        </article>
+        <article class="card flex flex-col" data-motion-card>
+          <h3>Partnership</h3>
+          <p class="!mb-2 text-3xl font-medium text-neutral-50">Monthly</p>
+          <p>Ongoing design and build once the site is live.</p>
+          <ul class="mt-6">
+            <li>Continuous improvements</li>
+            <li>New pages as the product changes</li>
+            <li>A partner who already knows the system</li>
+          </ul>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>

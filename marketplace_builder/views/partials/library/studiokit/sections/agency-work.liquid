@@ -1,0 +1,112 @@
+---
+metadata:
+  name: Agency Work
+  tags:
+  class: section
+  lists:
+  - name: Projects
+    type: agency_projects
+    fields:
+    - id: title
+      type: text
+      label: Title
+      default: Narrativ
+      is_title: true
+      richtext: false
+    - id: description
+      type: textarea
+      label: Description
+      default: An interactive showcase built to drive record engagement.
+      richtext: false
+    - id: url
+      type: url
+      label: Case study URL
+      default: "#"
+      richtext: false
+    - id: image
+      type: image_picker
+      label: Image
+      default:
+      richtext: false
+  fields:
+  - id: index
+    type: text
+    label: Index
+    default: "2"
+    richtext: false
+  - id: label
+    type: text
+    label: Label
+    default: Featured client work
+    richtext: false
+  - id: heading
+    type: text
+    label: Heading
+    default: Our projects
+    richtext: false
+  hide_on: []
+  category: content
+  requires: []
+  settings: []
+  collection: agency
+  components: []
+  updated_at: 1781820002
+  collections:
+  global_data:
+  global_fields: []
+---
+<section id="work" class="{{ this.variant }} @container w-full bg-[var(--p-bg-well)] py-16 @md:py-20 @lg:py-28" data-motion-group>
+  <div class="container !px-5 @md:!px-8 @lg:!px-12">
+    <div class="mb-6 flex items-center gap-3 @md:mb-8" data-motion-text>
+      <span class="grid h-7 w-7 place-items-center rounded-full bg-[var(--p-ink)] text-[12px] font-semibold text-[var(--p-text-inverse)]">{{ this.index | default: "2" }}</span>
+      <span class="rounded-full border border-[var(--p-border-strong)] px-3 py-1 text-[12px] font-medium text-[var(--p-text-primary)]">{{ this.label | default: "Featured client work" }}</span>
+    </div>
+    <h2 class="mb-10 max-w-[12ch] text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.08] tracking-[-0.03em] @md:mb-14" data-motion-text>{% if this.heading != blank %}{{ this.heading }}{% else %}Our projects{% endif %}</h2>
+    <div class="grid grid-cols-1 gap-5 @md:grid-cols-2 @md:gap-6 @lg:gap-7">
+      {% for item in lists.agency_projects %}
+      <article data-studio-list="{{ item._list }}" data-motion-text>
+        <a href="{{ item.url | default: '#' }}" class="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--p-ink)] [&_img]:h-full [&_img]:w-full [&_img]:object-cover">
+          {% if item.image != blank %}
+            {% include 'img', path: item.image, layout: 'default/lg', classes: 'block h-full w-full object-cover', attributes: 'alt="" loading="lazy"' %}
+          {% endif %}
+          <span class="absolute bottom-4 left-4 flex h-9 w-9 items-center overflow-hidden rounded-full bg-white text-[var(--p-ink)] transition-all duration-300 ease-out group-hover:w-[9.25rem]">
+            <span class="grid h-9 w-9 flex-none place-items-center">
+              <span class="material-symbols-outlined text-[18px] leading-none" aria-hidden="true">arrow_outward</span>
+            </span>
+            <span class="pr-3 text-[13px] font-medium whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">Learn more</span>
+          </span>
+        </a>
+        <p class="mt-4 max-w-md text-[13px] leading-relaxed text-[var(--p-text-secondary)] @md:text-[14px]">{{ item.description }}</p>
+        <h3 class="mt-1 text-[15px]">{{ item.title }}</h3>
+      </article>
+      {% else %}
+      <article data-motion-text>
+        <a href="#" class="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--p-ink)] [&_img]:h-full [&_img]:w-full [&_img]:object-cover">
+          {% include 'img', path: 'library/studiokit/ai/agency-home/professional-team-working-in-office-space-34774356.jpeg', layout: 'default/lg', classes: 'block h-full w-full object-cover', attributes: 'alt="" loading="lazy"' %}
+          <span class="absolute bottom-4 left-4 flex h-9 w-9 items-center overflow-hidden rounded-full bg-white text-[var(--p-ink)] transition-all duration-300 ease-out group-hover:w-[9.25rem]">
+            <span class="grid h-9 w-9 flex-none place-items-center">
+              <span class="material-symbols-outlined text-[18px] leading-none" aria-hidden="true">arrow_outward</span>
+            </span>
+            <span class="pr-3 text-[13px] font-medium whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">Learn more</span>
+          </span>
+        </a>
+        <p class="mt-4 text-[13px] leading-relaxed text-[var(--p-text-secondary)] @md:text-[14px]">Winner of Site of the Month — an interactive showcase driving record engagement.</p>
+        <h3 class="mt-1 text-[15px]">Narrativ</h3>
+      </article>
+      <article data-motion-text>
+        <a href="#" class="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--p-bg-raised)] [&_img]:h-full [&_img]:w-full [&_img]:object-cover">
+          {% include 'img', path: 'library/studiokit/ai/agency-home/people-having-business-meeting-together-3183183.jpeg', layout: 'default/lg', classes: 'block h-full w-full object-cover', attributes: 'alt="" loading="lazy"' %}
+          <span class="absolute bottom-4 left-4 flex h-9 w-9 items-center overflow-hidden rounded-full bg-[var(--p-ink)] text-white transition-all duration-300 ease-out group-hover:w-[9.25rem]">
+            <span class="grid h-9 w-9 flex-none place-items-center">
+              <span class="material-symbols-outlined text-[18px] leading-none" aria-hidden="true">arrow_outward</span>
+            </span>
+            <span class="pr-3 text-[13px] font-medium whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">Learn more</span>
+          </span>
+        </a>
+        <p class="mt-4 text-[13px] leading-relaxed text-[var(--p-text-secondary)] @md:text-[14px]">A dated platform rebuilt into a conversion-focused brand experience.</p>
+        <h3 class="mt-1 text-[15px]">Luminar</h3>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

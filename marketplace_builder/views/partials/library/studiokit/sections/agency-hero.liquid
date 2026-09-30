@@ -1,0 +1,89 @@
+---
+metadata:
+  name: Agency Hero
+  tags:
+  class: section
+  lists:
+  - name: Badges
+    type: agency_badges
+    fields:
+    - id: label
+      type: text
+      label: Label
+      default: Certified Partner
+      is_title: true
+      richtext: false
+    - id: style
+      type: select
+      label: Style
+      default: text
+      options:
+      - label: Text
+        value: text
+      - label: Pill
+        value: pill
+      richtext: false
+  fields:
+  - id: eyebrow
+    type: text
+    label: Eyebrow
+    default: Studio
+    richtext: false
+  - id: heading
+    type: textarea
+    label: Heading
+    default: We craft digital experiences for brands ready to dominate their category online.
+    richtext: false
+  - id: cta_label
+    type: text
+    label: CTA Label
+    default: Start a project
+    richtext: false
+  - id: cta_url
+    type: url
+    label: CTA URL
+    default: "#connect"
+    richtext: false
+  hide_on: []
+  category: hero
+  requires: []
+  settings: []
+  collection: agency
+  components: []
+  updated_at: 1781820000
+  collections:
+  global_data:
+  global_fields: []
+---
+<section class="{{ this.variant }} @container flex w-full min-h-[calc(100svh-4.75rem)] flex-col bg-[var(--p-bg-canvas)]" data-motion-group>
+  <div class="container !px-5 flex flex-1 flex-col justify-end pb-14 @md:!px-8 @md:pb-16 @lg:!px-12 @lg:pb-20">
+    <p class="mb-8 text-[14px] text-[var(--p-text-primary)]" data-motion-text>{{ this.eyebrow }}</p>
+    <h1 class="max-w-[32ch]" data-motion-text>{{ this.heading }}</h1>
+    <div class="mt-8 flex flex-wrap items-center gap-3" data-motion-text>
+      <a href="{{ this.cta_url | default: '#' }}" class="button group">
+        <span class="block h-5 overflow-hidden">
+          <span class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
+            <span class="block h-5 leading-5">{{ this.cta_label }}</span>
+            <span class="block h-5 leading-5" aria-hidden="true">{{ this.cta_label }}</span>
+          </span>
+        </span>
+        <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[var(--p-action-primary)]">
+          <span class="material-symbols-outlined text-[18px] leading-none" aria-hidden="true">arrow_forward</span>
+        </span>
+      </a>
+      <div class="flex items-center gap-2 rounded-[4px] bg-[var(--p-bg-raised)] px-2.5 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+        <span class="material-symbols-outlined text-[16px] leading-none text-[var(--p-action-primary)]" aria-hidden="true">flare</span>
+        {% for item in lists.agency_badges %}
+          {% if item.style == 'pill' %}
+            <span class="rounded bg-[var(--p-ink)] px-2 py-0.5 text-[11px] font-medium text-[var(--p-text-inverse)]" data-studio-list="{{ item._list }}">{{ item.label }}</span>
+          {% else %}
+            <span class="text-[13px] font-medium text-[var(--p-text-primary)]" data-studio-list="{{ item._list }}">{{ item.label }}</span>
+          {% endif %}
+        {% else %}
+          <span class="text-[13px] font-medium text-[var(--p-text-primary)]">Certified Partner</span>
+          <span class="rounded bg-[var(--p-ink)] px-2 py-0.5 text-[11px] font-medium text-[var(--p-text-inverse)]">Featured</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

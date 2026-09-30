@@ -1,0 +1,82 @@
+---
+layout: templates/basecoat
+max_deep_level: 1
+metadata:
+  name: Basecoat
+  studio:
+    order:
+    - basecoat-sidebar
+    - basecoat-showcase
+    sections:
+      basecoat-sidebar:
+        data:
+          variant: variant-1
+          title: Basecoat
+        type: basecoat-sidebar
+        lists:
+          basecoat_nav:
+            data:
+              nav_buttons:
+                label: Buttons
+                url: "#bc-buttons"
+                group: Components
+              nav_badges:
+                label: Badges
+                url: "#bc-badges"
+                group: Components
+              nav_cards:
+                label: Cards
+                url: "#bc-cards"
+                group: Components
+              nav_forms:
+                label: Forms
+                url: "#bc-forms"
+                group: Components
+              nav_feedback:
+                label: Feedback
+                url: "#bc-feedback"
+                group: Components
+              nav_overlays:
+                label: Overlays
+                url: "#bc-overlays"
+                group: Components
+              nav_data:
+                label: Data
+                url: "#bc-data"
+                group: Components
+            order:
+            - nav_buttons
+            - nav_badges
+            - nav_cards
+            - nav_forms
+            - nav_feedback
+            - nav_overlays
+            - nav_data
+        system:
+          section_name: Basecoat Sidebar
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+      basecoat-showcase:
+        data:
+          variant: variant-1
+          heading: All of the component system, none of the React.
+          intro: This page is built with Basecoat markup. Buttons, fields, menus, and overlays use the Vega stylesheet.
+        type: basecoat-showcase
+        lists: {}
+        system:
+          section_name: Basecoat Showcase
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+slug: basecoat
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+{% include 'modules/module_357/render_page' %}

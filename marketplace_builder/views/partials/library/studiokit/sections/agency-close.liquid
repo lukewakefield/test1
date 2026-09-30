@@ -1,0 +1,64 @@
+---
+metadata:
+  name: Agency Close
+  tags:
+  class: section
+  fields:
+  - id: eyebrow
+    type: text
+    label: Eyebrow
+    default: Work with us
+    richtext: false
+  - id: heading
+    type: textarea
+    label: Heading
+    default: Ready to dominate your category?
+    richtext: false
+  - id: cta_label
+    type: text
+    label: CTA Label
+    default: Start a project
+    richtext: false
+  - id: cta_url
+    type: url
+    label: CTA URL
+    default: "#connect"
+    richtext: false
+  - id: email
+    type: text
+    label: Email
+    default: hello@studio.test
+    richtext: false
+  hide_on: []
+  category: content
+  requires: []
+  settings: []
+  collection: agency
+  components: []
+  updated_at: 1781820003
+  collections:
+  global_data:
+  global_fields: []
+---
+<section id="connect" class="{{ this.variant }} @container w-full bg-[var(--p-ink)] py-16 text-[var(--p-text-inverse)] @md:py-20 @lg:py-24" data-motion-group>
+  <div class="container !px-5 flex flex-col gap-8 @md:!px-8 @lg:!px-12 @lg:flex-row @lg:items-end @lg:justify-between @lg:pb-4">
+    <div class="max-w-2xl" data-motion-text>
+      <p class="mb-4 text-[14px] text-[var(--p-ink-muted)]">{{ this.eyebrow | default: "Work with us" }}</p>
+      <h2 class="max-w-[9em] text-[clamp(2.5rem,5vw,4.2rem)] leading-[1.08] tracking-[-0.03em] text-[var(--p-text-inverse)]">{% if this.heading != blank %}{{ this.heading }}{% else %}Ready to dominate your category?{% endif %}</h2>
+    </div>
+    <div class="flex flex-col items-start gap-4 @md:flex-row @md:items-center" data-motion-text>
+      <a href="{{ this.cta_url | default: '#' }}" class="button group">
+        <span class="block h-5 overflow-hidden">
+          <span class="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
+            <span class="block h-5 leading-5">{{ this.cta_label | default: "Start a project" }}</span>
+            <span class="block h-5 leading-5" aria-hidden="true">{{ this.cta_label | default: "Start a project" }}</span>
+          </span>
+        </span>
+        <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[var(--p-action-primary)]">
+          <span class="material-symbols-outlined text-[18px] leading-none" aria-hidden="true">arrow_forward</span>
+        </span>
+      </a>
+      <a href="mailto:{{ this.email | default: 'hello@studio.test' }}" class="text-[14px] text-[var(--p-ink-muted)] hover:text-[var(--p-text-inverse)]">{{ this.email | default: "hello@studio.test" }}</a>
+    </div>
+  </div>
+</section>

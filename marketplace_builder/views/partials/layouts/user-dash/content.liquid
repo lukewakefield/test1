@@ -1,0 +1,26 @@
+{%- comment -%}
+  User Dash content area. Branches on `active_tab`; tabs without real
+  content yet fall through to a placeholder.
+
+  Params:
+  active_tab (required) — the currently selected tab slug
+{%- endcomment -%}
+
+{%- case active_tab -%}
+  {%- when 'orders' -%}
+    <div class="mb-4"></div>
+    {%- include 'user_orders' -%}
+  {%- when 'wishlist' -%}
+    {%- include 'wishlist' -%}
+  {%- when 'addresses' -%}
+    {%- include 'address_book' -%}
+  {%- when 'profile' -%}
+    {%- include 'user_details'
+      , layout: 'user-dash' -%}
+  {%- else -%}
+    {%- assign tab_label = active_tab | replace: '-', ' ' | capitalize -%}
+    <div class="bg-white rounded-lg border border-gray-200 p-6 min-h-[24rem]">
+      <h2 class="text-xl font-semibold mb-2">{{ tab_label }}</h2>
+      <p class="text-gray-500">Content for this tab hasn't been built yet.</p>
+    </div>
+{%- endcase -%}

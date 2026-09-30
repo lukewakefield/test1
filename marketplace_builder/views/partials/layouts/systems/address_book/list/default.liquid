@@ -1,0 +1,52 @@
+{%- comment -%}
+  Lists the current user's saved addresses from the address_book system
+  table (views/partials/tables/systems/address_book.liquid). There's no
+  core Siteglide include for this (unlike user_orders), so this queries
+  GraphQL directly, scoping by Record.user_id — confirmed via schema
+  introspection against the address_book table on staging.
+{%- endcomment -%}
+
+{%- if context.current_user.id == blank -%}
+  <p class="text-gray-500">Log in to view your saved addresses.</p>
+{%- else -%}
+  {% graphql address_query, user_id: context.current_user.id %}
+    query saved_addresses($user_id: ID!) {
+      records(per_page: 100, filter: { table: { value: "address_book" }, user_id: { value: $user_id } }) {
+        results {
+          id
+          properties
+        }
+      }
+    }
+  {% endgraphql %}
+
+  {%- assign addresses = address_query.records.results -%}
+
+  {%- if addresses.size == 0 -%}
+    <p class="text-gray-500">You don't have any saved addresses yet.</p>
+  {%- else -%}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {%- for address in addresses -%}
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <h3 class="font-semibold">{{ address.properties.name | default: address.properties.type }}</h3>
+            <div class="flex gap-1">
+              {%- if address.properties.default_shipping -%}
+                <span class="text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded">Default Shipping</span>
+              {%- endif -%}
+              {%- if address.properties.default_billing -%}
+                <span class="text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded">Default Billing</span>
+              {%- endif -%}
+            </div>
+          </div>
+          <p class="text-sm text-gray-600">
+            {{ address.properties.line_1 }}<br>
+            {%- if address.properties.line_2 != blank -%}{{ address.properties.line_2 }}<br>{%- endif -%}
+            {{ address.properties.city }}, {{ address.properties.state }} {{ address.properties.zip }}<br>
+            {{ address.properties.country }}
+          </p>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

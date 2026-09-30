@@ -1,0 +1,26 @@
+---
+metadata:
+  name: Login
+  tags:
+  class: section
+  fields:
+  - id: side_image
+    type: image_picker
+    label: Side Image (optional)
+  - id: side_image_alt
+    type: text
+    label: Side Image Alt Text
+    default: ''
+  - id: redirect_url
+    type: url
+    label: Redirect URL After Login
+    default: ''
+  hide_on: []
+  category: content
+  collection: studiokit
+---
+{% include 'login_form'
+  , layout: 'default-login-page'
+  , side_image: this.side_image
+  , side_image_alt: this.side_image_alt
+  , redirect: this.redirect_url %}

@@ -1,0 +1,43 @@
+---
+layout: templates/1
+max_deep_level: 1
+metadata:
+  name: Checkout
+  studio:
+    order:
+    - checkout-form-with-embedded-cart
+    sections:
+      checkout-form-with-embedded-cart:
+        id: checkout-form-with-embedded-cart
+        data: {}
+        name: Checkout form with embedded cart
+        type: legacy_dynamic
+        title: checkout-form-with-embedded-cart
+        system:
+          id: '1'
+          type: default
+          layout: checkout-form-with-embedded-cart
+          admin_link: "/cms/forms"
+          liquid_tag: ecommerce/checkout
+          live_updates: false
+          section_name: Checkout form with embedded cart
+          schema_selector:
+            module_id: module_s1
+            sub_module_id: '7'
+          physical_file_path: views/partials/layouts/forms/global/checkout-form-with-embedded-cart.liquid
+        mapping: {}
+        settings:
+          id: '3'
+          variant: variant-1
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+  last_edit: 1789378037668
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+
+{% include 'modules/module_357/render_page' %}

@@ -1,0 +1,74 @@
+---
+metadata:
+  name: Hands Process
+  class: section
+  category: features
+  lists:
+    - name: Steps
+      type: steps
+      fields:
+        - { id: title, type: text, label: Title, default: 'Discover', is_title: true }
+        - { id: description, type: textarea, label: Description, default: 'Align on who it is for and what success looks like before design starts.' }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'A system you can grow with.' }
+    - { id: body, type: textarea, label: Body, default: 'Four steps, from the first conversation to a site the team can keep shipping.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-3xl" data-motion-group>
+      <h2 data-motion-text>{{ this.heading | default: 'A system you can grow with.' }}</h2>
+      {% if this.body != blank %}
+        <p data-motion-text>{{ this.body }}</p>
+      {% endif %}
+    </div>
+    <ol class="mt-14 grid grid-cols-1 gap-10 @md:grid-cols-2 @lg:grid-cols-4" data-motion-group>
+      {% if lists.steps != blank %}
+        {% for item in lists.steps %}
+          <li data-studio-list="{{ item._list }}" class="!mb-0 border-t border-white/15 pt-6" data-motion-card>
+            <p class="eyebrow_text !mb-3" data-motion-text>0{{ forloop.index }}</p>
+            <h3 data-motion-text>{{ item.title }}</h3>
+            {% if item.description != blank %}
+              <p data-motion-text>{{ item.description }}</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="!mb-0 border-t border-white/15 pt-6" data-motion-card>
+          <p class="eyebrow_text !mb-3">01</p>
+          <h3 data-motion-text>Discover</h3>
+          <p data-motion-text>Align on the audience and what success looks like.</p>
+        </li>
+        <li class="!mb-0 border-t border-white/15 pt-6" data-motion-card>
+          <p class="eyebrow_text !mb-3">02</p>
+          <h3 data-motion-text>Design</h3>
+          <p data-motion-text>A few visual directions, then one system to build from.</p>
+        </li>
+        <li class="!mb-0 border-t border-white/15 pt-6" data-motion-card>
+          <p class="eyebrow_text !mb-3">03</p>
+          <h3 data-motion-text>Build</h3>
+          <p data-motion-text>Fast, stable, and easy for the team to update.</p>
+        </li>
+        <li class="!mb-0 border-t border-white/15 pt-6" data-motion-card>
+          <p class="eyebrow_text !mb-3">04</p>
+          <h3 data-motion-text>Launch</h3>
+          <p data-motion-text>Ship with support still in the room after go-live.</p>
+        </li>
+      {% endif %}
+    </ol>
+  </div>
+</section>

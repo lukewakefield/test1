@@ -1,0 +1,60 @@
+---
+metadata:
+  name: Hands Principles
+  class: section
+  category: features
+  lists:
+    - name: Principles
+      type: principles
+      fields:
+        - { id: title, type: text, label: Title, default: 'Systems over pages', is_title: true }
+        - { id: description, type: textarea, label: Description, default: 'You get a library you can build from, not a handful of one-off screens.' }
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'Every site is built around a few principles.' }
+    - { id: body, type: textarea, label: Body, default: 'The foundation is what lets the team keep going after launch.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components: []
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-3xl" data-motion-group>
+      <h2 data-motion-text>{{ this.heading | default: 'Every site is built around a few principles.' }}</h2>
+      {% if this.body != blank %}
+        <p data-motion-text>{{ this.body }}</p>
+      {% endif %}
+    </div>
+    <div class="mt-14 grid grid-cols-1 gap-x-10 gap-y-12 @md:grid-cols-2 @lg:grid-cols-3" data-motion-group>
+      {% if lists.principles != blank %}
+        {% for item in lists.principles %}
+          <article data-studio-list="{{ item._list }}" data-motion-card>
+            <p class="eyebrow_text !mb-3" data-motion-text>{{ forloop.index }}</p>
+            <h3 data-motion-text>{{ item.title }}</h3>
+            {% if item.description != blank %}
+              <p data-motion-text>{{ item.description }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% else %}
+        <article data-motion-card><p class="eyebrow_text !mb-3">1</p><h3>Systems over pages</h3><p>A library to build from, not a handful of one-off screens.</p></article>
+        <article data-motion-card><p class="eyebrow_text !mb-3">2</p><h3>Humans with AI</h3><p>AI speeds delivery. People still make the important decisions.</p></article>
+        <article data-motion-card><p class="eyebrow_text !mb-3">3</p><h3>The whole team</h3><p>Anyone should be able to update the site without a ticket.</p></article>
+        <article data-motion-card><p class="eyebrow_text !mb-3">4</p><h3>Set goals</h3><p>Every page exists to move the business, not only to look good.</p></article>
+        <article data-motion-card><p class="eyebrow_text !mb-3">5</p><h3>Built to evolve</h3><p>The site should improve continuously, not be replaced every few years.</p></article>
+        <article data-motion-card><p class="eyebrow_text !mb-3">6</p><h3>Partnerships</h3><p>Launch is the start. The work continues after it is live.</p></article>
+      {% endif %}
+    </div>
+  </div>
+</section>

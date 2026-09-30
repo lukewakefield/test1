@@ -1,0 +1,68 @@
+---
+metadata:
+  name: Hands Closing
+  class: section
+  category: content
+  lists: []
+  fields:
+    - { id: heading, type: textarea, label: Heading, default: 'Your website, in good hands.' }
+    - { id: body, type: textarea, label: Body, default: 'Build, improve, and grow. Start with a conversation.' }
+    - id: variant
+      type: select
+      label: Variant
+      default: variant-1
+      options:
+        - { label: Variant 1, value: variant-1 }
+        - { label: Variant 2, value: variant-2 }
+        - { label: Variant 3, value: variant-3 }
+        - { label: Variant 4, value: variant-4 }
+        - { label: Variant 5, value: variant-5 }
+  hide_on: []
+  requires: []
+  settings: []
+  collection: hands
+  components:
+    - name: Button
+      type: cta_button
+      fields:
+        - { id: button_title, type: text, label: Button Title, default: 'Get started', is_title: true }
+        - { id: button_link, type: text, label: Button Link, default: '#' }
+        - id: button_type
+          type: select
+          label: Button Type
+          default: button
+          options:
+            - { label: Button, value: button }
+            - { label: Button Secondary, value: button-secondary }
+      availableOn:
+        - fields
+---
+<section class="@container {{ this.variant }}" data-motion-group>
+  <div class="container">
+    <div class="max-w-3xl" data-motion-group>
+      <h2 data-motion-text>{{ this.heading | default: 'Your website, in good hands.' }}</h2>
+      {% if this.body != blank %}
+        <p data-motion-text>{{ this.body }}</p>
+      {% endif %}
+      {% if components %}
+        <div class="mt-8 flex flex-wrap items-center gap-3" data-motion-group>
+          {% for component_item in components %}
+            {% assign component = component_item %}
+            {% if component_item[1] %}{% assign component = component_item[1] %}{% endif %}
+            {% assign component_data = component.data | default: component %}
+            {% if component_data.button_title != blank %}
+              {% assign button_class = 'button' %}
+              {% if component_data.button_type == 'button-secondary' %}{% assign button_class = 'button-secondary' %}{% endif %}
+              <a href="{{ component_data.button_link | default: '#' }}" class="{{ button_class }}">{{ component_data.button_title }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="mt-8 flex flex-wrap items-center gap-3" data-motion-group>
+          <a href="#" class="button">Get started</a>
+          <a href="#" class="button-secondary">Book a call</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

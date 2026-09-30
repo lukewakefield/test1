@@ -1,0 +1,1109 @@
+---
+metadata:
+  settings:
+  - id: eyebrow_text
+    type: text
+    label: Eyebrow Text
+    default: Contact
+  - id: intro_text
+    type: textarea
+    label: Intro Text
+    default: Have a question or want to get in touch? Choose an option below.
+  - id: details_tab_label
+    type: text
+    label: '"Contact Details" Tab Label'
+    default: Contact Details
+  - id: form_tab_label
+    type: text
+    label: '"Send Message" Tab Label'
+    default: Send Message
+  - id: show_map
+    type: boolean
+    label: Show Map
+    default: true
+  - id: map_location
+    type: text
+    label: Map Location Override (address or place name)
+    default: ''
+  - id: contact_address
+    type: textarea
+    label: Address Override (leave blank to use the Form's configured address)
+    default: ''
+  - id: contact_email
+    type: text
+    label: Contact Email Override (leave blank to use the Form's configured email)
+    default: ''
+  - id: contact_phone
+    type: text
+    label: Contact Number Override (leave blank to use the Form's configured phone)
+    default: ''
+  studio_theme: studiokit
+  studio_library: studiokit
+  studio_dynamic/type: default
+  studio_dynamic/files:
+  - views/partials/layouts/forms/global/default-contact-form.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/boolean.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/checkout_standard.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/basic_payment.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/quote_only.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/subscription_detail.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/datasource_multi.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/datasource.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/date.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/email.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/file.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/image.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/hidden_fields.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/input_checkbox.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/input_radio.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/name_field.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/password.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/recaptcha.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/select_multi.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/select.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/string.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/textarea.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/subheading.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/heading.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/array_custom.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/folder.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/image_array.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/number_float.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/number_integer.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/email_edit.liquid
+  - views/partials/layouts/forms/global/default-contact-form_components/password_edit.liquid
+  studio_dynamic/theme: studiokit
+  studio_dynamic/layout: default-contact-form
+  studio_dynamic/theme_id: theme_01
+  studio_dynamic/module_id: module_s1
+  studio_dynamic/layout_name: Default Contact Form
+  studio_dynamic/live_updates: 'false'
+  studio_dynamic/ui_framework: tailwind
+  studio_dynamic/original_name: Default Contact Form
+  studio_dynamic/sub_module_id: '1'
+  studio_dynamic/make_global_form: true
+---
+{% capture sitebuilder_uniq_component_id %}sitegurus_component_{% increment sitegurus_gen_uniq_component_id %}{% endcapture %}
+{% capture form_html_id %}form_{{sitebuilder_uniq_component_id}}{% endcapture %}
+
+<style>
+  /* Siteglide form progress */
+  #{{form_html_id}}.form_submitting #spinner_{{sitebuilder_uniq_component_id}} {
+    display: block !important;
+  }
+
+  #{{form_html_id}}:not([data-s-form-progress]) #progressContainer,
+  #{{form_html_id}}[data-s-form-progress='0'] #progressContainer {
+    display: none;
+  }
+
+  #{{form_html_id}} #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 0%;
+    will-change: width;
+    transition: width 0.8s ease-out;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='1'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 10%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='2'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 20%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='3'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 30%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='4'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 40%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='5'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 50%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='6'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 60%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='7'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 80%;
+  }
+
+  #{{form_html_id}}[data-s-form-progress='8'] #progressBar_{{sitebuilder_uniq_component_id}} {
+    width: 100%;
+  }
+
+  .contact-tab-panel {
+    animation: contactTabFade .2s ease-out;
+  }
+
+  @keyframes contactTabFade {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+
+{% assign form_addresses = context.exports.module_86.form_addresses | parse_json %}
+
+<section data-motion-group>
+
+  <div class="container">
+
+
+
+    <div class="grid grid-cols-1 gap-6 py-10 md:gap-8 md:py-16{% unless settings.show_map == false %} lg:grid-cols-2{% endunless %}">
+
+
+
+      <div
+        class="card rounded-2xl bg-base-50 p-6 dark:bg-base-900/20 md:p-8"
+        data-motion-card
+      >
+
+
+        <div class="mb-8 space-y-2" data-motion-group>
+
+          <p
+            class="eyebrow_text"
+            data-motion-text
+          >
+            {{ settings.eyebrow_text | default: 'Contact' }}
+          </p>
+
+          <h1 data-motion-text>
+            {{context.exports.module_86.form_properties.form_name.value}}
+          </h1>
+
+          <p
+            class="max-w-lg text-sm text-neutral-400"
+            data-motion-text
+          >
+            {{ settings.intro_text | default: 'Have a question or want to get in touch? Choose an option below.' }}
+          </p>
+
+        </div>
+
+
+
+        <div
+          class="mb-8 grid grid-cols-2 gap-1 rounded-xl p-1 "
+          role="tablist"
+          aria-label="Contact options"
+        >
+
+
+          <button
+            type="button"
+            class="contact-tab rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200"
+            role="tab"
+            aria-selected="true"
+            data-contact-tab="details"
+          >
+
+            <span class="flex items-center justify-center gap-2">
+
+              <span class="material-symbols-outlined text-lg leading-none">
+                info
+              </span>
+
+              <span>
+                {{ settings.details_tab_label | default: 'Contact Details' }}
+              </span>
+
+            </span>
+
+          </button>
+
+
+
+          <button
+            type="button"
+            class="contact-tab rounded-lg px-4 py-3 text-sm font-medium text-neutral-100 transition-all "
+            role="tab"
+            aria-selected="false"
+            data-contact-tab="form"
+          >
+
+            <span class="flex items-center justify-center gap-2">
+
+              <span class="material-symbols-outlined text-lg leading-none">
+                mail
+              </span>
+
+              <span>
+                {{ settings.form_tab_label | default: 'Send Message' }}
+              </span>
+
+            </span>
+
+          </button>
+
+        </div>
+
+
+
+
+        <div
+          class="contact-tab-panel"
+          data-contact-panel="details"
+          role="tabpanel"
+        >
+
+          {% assign display_email = settings.contact_email | default: context.exports.module_86.form_properties.email.value %}
+          {% assign display_phone = settings.contact_phone | default: context.exports.module_86.form_properties.phone.value %}
+
+          <div class="divide-y divide-base-200 dark:divide-base-700">
+
+            {% if settings.contact_address != blank %}
+
+              <div class="flex gap-4 py-5 first:pt-0">
+
+                <div
+                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
+                >
+
+                  <span class="material-symbols-outlined text-xl">
+                    location_on
+                  </span>
+
+                </div>
+
+                <div class="min-w-0">
+
+                  <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                    Address
+                  </p>
+
+                  <div class="text-sm leading-6 text-neutral-700 dark:text-neutral-200">
+                    {{settings.contact_address | newline_to_br}}
+                  </div>
+
+                </div>
+
+              </div>
+
+            {% elsif form_addresses != blank %}
+
+              {% for address in form_addresses %}
+
+                <div class="flex gap-4 py-5 first:pt-0">
+
+                  <div
+                    class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
+                  >
+
+                    <span class="material-symbols-outlined text-xl">
+                      location_on
+                    </span>
+
+                  </div>
+
+                  <div class="min-w-0">
+
+                    <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                      {{address[0]}}
+                    </p>
+
+                    <div class="text-sm leading-6 text-neutral-700 dark:text-neutral-200">
+                      {{address[1].html | html_safe: raw_text: true}}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              {% endfor %}
+
+            {% endif %}
+
+
+            {% if display_email != blank %}
+
+              <div class="flex gap-4 py-5">
+
+                <div
+                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
+                >
+
+                  <span class="material-symbols-outlined text-xl">
+                    mail
+                  </span>
+
+                </div>
+
+                <div class="min-w-0">
+
+                  <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                    Email
+                  </p>
+
+                  <a
+                    href="mailto:{{display_email}}"
+                    class="text-sm text-neutral-700 transition-opacity hover:opacity-60 dark:text-neutral-200"
+                  >
+                    {{display_email}}
+                  </a>
+
+                </div>
+
+              </div>
+
+            {% endif %}
+
+
+            {% if display_phone != blank %}
+
+              <div class="flex gap-4 py-5 last:pb-0">
+
+                <div
+                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
+                >
+
+                  <span class="material-symbols-outlined text-xl">
+                    call
+                  </span>
+
+                </div>
+
+                <div class="min-w-0">
+
+                  <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                    Phone
+                  </p>
+
+                  <a
+                    href="tel:{{display_phone}}"
+                    class="text-sm text-neutral-700 transition-opacity hover:opacity-60 dark:text-neutral-200"
+                  >
+                    {{display_phone}}
+                  </a>
+
+                </div>
+
+              </div>
+
+            {% endif %}
+
+          </div>
+
+        </div>
+
+
+
+
+        <div
+          class="contact-tab-panel hidden"
+          data-contact-panel="form"
+          role="tabpanel"
+        >
+
+
+
+
+          {% form html_id: form_html_id, html_class: "space-y-5 text-left" -%}
+
+            {% include "modules/module_357/front_end/v1/form_layout_fields", collection: 'true', disable_fields: "Name" %}
+
+
+
+
+
+            <div>
+
+              {{context.exports.module_86.form_fields | html_safe: raw_text: true }}
+
+              {{context.exports.module_86.form_hidden | html_safe: raw_text: true }}
+
+            </div>
+
+
+            {% assign form_addresses = context.exports.module_86.form_addresses | parse_json %}
+
+            {% for address in form_addresses %}
+
+              <h2 data-motion-text>
+                {{address[0]}}
+              </h2>
+
+              <div>
+                {{address[1].html | html_safe: raw_text: true}}
+              </div>
+
+            {% endfor %}
+
+
+            {% if context.exports.module_86.form_payment != blank %}
+
+              <h2 data-motion-text>
+                Payment Details
+              </h2>
+
+              <div>
+                {{context.exports.module_86.form_payment | html_safe: raw_text: true }}
+              </div>
+
+            {% endif %}
+
+
+            {% if context.exports.module_86.form_recaptcha != blank %}
+
+              <div>
+                {{context.exports.module_86.form_recaptcha | html_safe: raw_text: true }}
+              </div>
+
+            {% endif %}
+
+
+
+            <div data-main-error class="hidden">
+
+              <div
+                class="mb-4 rounded-xl bg-danger-100 p-4 text-sm text-danger-700 dark:bg-danger-200 dark:text-danger-800"
+                role="alert"
+              >
+
+                <span class="font-medium">
+                  Error
+                </span>
+
+                <span data-main-error-message>
+                  <!-- Main Siteglide validation message will appear here. -->
+                </span>
+
+              </div>
+
+            </div>
+
+
+
+            <button type="submit" class="button w-full">
+
+              <div class="flex items-center justify-center gap-2">
+
+                <span>
+                  Submit
+                </span>
+
+                <div
+                  id="spinner_{{sitebuilder_uniq_component_id}}"
+                  class="hidden"
+                >
+
+                  <span class="material-symbols-outlined animate-spin text-lg leading-none text-primary-200">
+                    progress_activity
+                  </span>
+
+                </div>
+
+              </div>
+
+            </button>
+
+
+
+            <div
+              id="progressContainer"
+              class="h-2.5 w-full rounded-full bg-base-200 dark:bg-base-700"
+            >
+
+              <div
+                id="progressBar_{{sitebuilder_uniq_component_id}}"
+                class="h-2.5 rounded-full bg-primary-600"
+              ></div>
+
+            </div>
+
+          {% endform %}
+
+        </div>
+
+      </div>
+
+
+
+
+      {% unless settings.show_map == false %}
+      <div
+        class="card relative min-h-[420px] overflow-hidden rounded-2xl bg-base-50 dark:bg-base-900/20 lg:min-h-full"
+        data-motion-card
+      >
+
+        {% assign first_address = form_addresses[0][1].html %}
+        {% assign map_label = settings.map_location | default: first_address | strip_html | strip_newlines %}
+
+        {% if map_label != blank %}
+
+          {% assign map_query = map_label | escape %}
+
+          <iframe
+            title="Location map"
+            class="absolute inset-0 size-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q={{map_query}}&output=embed"
+          ></iframe>
+
+
+          <div
+            class="absolute bottom-4 left-4 right-4 rounded-xl border border-base-200 bg-base-50/95 p-4 shadow-sm backdrop-blur-sm dark:border-base-700 dark:bg-base-900/95"
+          >
+
+            <div class="flex items-start gap-3">
+
+              <div
+                class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400"
+              >
+
+                <span class="material-symbols-outlined">
+                  location_on
+                </span>
+
+              </div>
+
+              <div class="min-w-0">
+
+                <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                  Find us
+                </p>
+
+                <div class="text-sm text-neutral-700 dark:text-neutral-200">
+                  {{map_label}}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        {% else %}
+
+
+          <div class="flex h-full min-h-[420px] items-center justify-center p-8 text-center">
+
+            <div>
+
+              <span class="material-symbols-outlined mb-3 text-4xl text-neutral-400">
+                location_on
+              </span>
+
+              <p class="text-sm text-neutral-400">
+                Location map
+              </p>
+
+            </div>
+
+          </div>
+
+        {% endif %}
+
+      </div>
+      {% endunless %}
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+
+
+  (function () {
+
+    var component = document.querySelector(
+      '[data-motion-group]'
+    );
+
+    if (!component) {
+      return;
+    }
+
+    var tabs = component.querySelectorAll('[data-contact-tab]');
+    var panels = component.querySelectorAll('[data-contact-panel]');
+
+
+    function setActiveTab(target) {
+
+      tabs.forEach(function (tab) {
+
+        var isActive =
+          tab.dataset.contactTab === target;
+
+        tab.setAttribute(
+          'aria-selected',
+          isActive ? 'true' : 'false'
+        );
+
+        if (isActive) {
+
+          tab.classList.add(
+            'bg-base-50',
+            'text-neutral-900',
+            'shadow-sm',
+            'dark:bg-base-800',
+            'dark:text-white'
+          );
+
+          tab.classList.remove(
+            'text-neutral-100',
+            'dark:text-neutral-400'
+          );
+
+        } else {
+
+          tab.classList.remove(
+            'bg-base-50',
+            'text-neutral-900',
+            'shadow-sm',
+            'dark:bg-base-800',
+            'dark:text-white'
+          );
+
+          tab.classList.add(
+            'text-neutral-100',
+            'dark:text-neutral-400'
+          );
+
+        }
+
+      });
+
+
+      panels.forEach(function (panel) {
+
+        var isActive =
+          panel.dataset.contactPanel === target;
+
+        if (isActive) {
+
+          panel.classList.remove('hidden');
+
+        } else {
+
+          panel.classList.add('hidden');
+
+        }
+
+      });
+
+    }
+
+
+    tabs.forEach(function (tab) {
+
+      tab.addEventListener('click', function () {
+
+        setActiveTab(
+          tab.dataset.contactTab
+        );
+
+      });
+
+    });
+
+
+
+    setActiveTab('details');
+
+  })();
+
+
+
+
+  (function(){
+
+
+    if(typeof sGCheckboxValidation == "function") {
+
+      initForm();
+
+    } else {
+
+      var forms_api_script =
+        document.querySelector(
+          '#sitegurus_forms_javascript_api'
+        );
+
+      if(forms_api_script) {
+
+        forms_api_script.addEventListener(
+          'load',
+          initForm
+        );
+
+      } else {
+
+        console.error(
+          'Developer error: Make sure the async #sitegurus_forms_javascript_api script tag is included in the page.'
+        );
+
+      }
+
+    }
+
+
+
+    function initForm() {
+
+      var form_html_id =
+        "{{form_html_id}}";
+
+      var form =
+        document.querySelector(
+          '#'+form_html_id
+        );
+
+      if (!form) {
+        return;
+      }
+
+      var submitButton =
+        form.querySelector(
+          'button[type=submit]'
+        );
+
+
+
+      var checksAndRadios =
+        form.querySelectorAll(
+          '.required input[type=checkbox],.required input[type=radio]'
+        );
+
+
+      checksAndRadios.forEach(
+        function(item) {
+
+          item.addEventListener(
+            'change',
+            sGCheckboxValidation
+          );
+
+        }
+      );
+
+
+
+      sGCheckboxValidation(
+        null,
+        {form}
+      );
+
+
+
+      function sGFormCustomError(
+        error,
+        error_details
+      ) {
+
+
+        if(error.code) {
+
+          if(error.code.length > 0) {
+
+            error =
+              error.code[0];
+
+          } else {
+
+            error =
+              s_error_formatter(error);
+
+          }
+
+        } else {
+
+          error =
+            s_error_formatter(error);
+
+        }
+
+
+
+        var fields_for_validation =
+          form.querySelectorAll(
+            '[data-sg-validation-label]'
+          );
+
+        var field_validation_map = {};
+        var field_validation_ids = [];
+
+        var required_fields =
+          form.querySelectorAll('[required]');
+
+
+        fields_for_validation.forEach(
+          function(field) {
+
+            field_validation_ids.push(
+              field.dataset.sgValidationId
+            );
+
+            field_validation_map[
+              field.dataset.sgValidationId
+            ] =
+              field.dataset.sgValidationLabel;
+
+          }
+        );
+
+
+        if(
+          field_validation_ids.includes(error) ||
+          field_validation_ids.includes(
+            error.replace(/\]\[\]/, '')
+          )
+        ) {
+
+          error =
+            `Please enter a value for the required fields marked above.`;
+
+        }
+
+        else if(
+          error.includes('captcha')
+        ) {
+
+          error =
+            `please confirm you are not a bot by completing the challenge.`;
+
+        }
+
+
+
+        var formErrorContainer =
+          form.querySelector(
+            '[data-main-error]'
+          );
+
+
+        if(
+          error &&
+          formErrorContainer
+        ) {
+
+          formErrorContainer.classList.remove(
+            'hidden'
+          );
+
+          formErrorContainer
+            .querySelector(
+              '[data-main-error-message]'
+            )
+            .textContent =
+              error;
+
+        }
+
+
+        form.classList.add(
+          'group'
+        );
+
+
+
+        var fieldError =
+          form.querySelector(
+            '.input-error'
+          );
+
+
+        if(fieldError) {
+
+          fieldError.scrollIntoView({
+            block: "nearest"
+          });
+
+        }
+
+
+
+        var valid_fields =
+          form.querySelectorAll(
+            'input,select,textarea'
+          );
+
+
+        valid_fields.forEach(
+          function(item) {
+
+            item.setCustomValidity("");
+
+          }
+        );
+
+
+        var invalid_fields =
+          form.querySelectorAll(
+            '.input-error'
+          );
+
+
+        form.classList.add(
+          'was-submitted'
+        );
+
+
+        invalid_fields.forEach(
+          function(field){
+
+            if(
+              field.id == "s_email_edit" ||
+              field.id == "s_password_edit" ||
+              field.id == "s_password_edit_confirmation" ||
+              field.id == "s_email_edit_confirmation"
+            ) {
+
+              field.setCustomValidity(
+                error
+              );
+
+            }
+
+            field.classList.remove(
+              'input-error'
+            );
+
+          }
+        );
+
+      }
+
+
+
+      function sGFormSubmit(event) {
+
+        event.preventDefault();
+
+
+        sGCheckboxValidation(
+          null,
+          {form}
+        );
+
+
+        form.classList.remove(
+          'group'
+        );
+
+
+        var formErrorContainer =
+          form.querySelector(
+            '[data-main-error]'
+          );
+
+
+        formErrorContainer.classList.add(
+          'hidden'
+        );
+
+
+
+        if(
+          typeof tinymce === 'object' &&
+          typeof window.sgRichTextConfig
+        ) {
+
+          window.sgRichTextConfig.forEach(
+            function(item) {
+
+              item.textarea.textContent =
+                item.editor.getContent();
+
+
+              var wrapper =
+                item.textarea.closest(
+                  '[data-sg-rich-text-wrapper]'
+                );
+
+
+              if(wrapper) {
+
+                const validClasses = [
+                  'bg-success-50',
+                  'border-success-500',
+                  'text-success-900',
+                  'placeholder-success-700',
+                  'focus:ring-success-500',
+                  'focus:border-success-500',
+                  'dark:border-success-400'
+                ];
+
+                const invalidClasses = [
+                  'bg-danger-50',
+                  'border-danger-500',
+                  'text-danger-900',
+                  'placeholder-danger-700',
+                  'focus:ring-danger-500',
+                  'focus:border-danger-500',
+                  'dark:text-danger-500',
+                  'dark:placeholder-danger-500',
+                  'dark:border-danger-500'
+                ];
+
+
+                if(
+                  item.textarea.classList.contains('required') &&
+                  item.textarea.textContent.length <= 1
+                ) {
+
+                  wrapper.classList.remove(
+                    ...validClasses
+                  );
+
+                  wrapper.classList.add(
+                    ...invalidClasses
+                  );
+
+                } else {
+
+                  wrapper.classList.remove(
+                    ...invalidClasses
+                  );
+
+                  wrapper.classList.add(
+                    ...validClasses
+                  );
+
+                }
+
+              }
+
+            }
+          );
+
+        }
+
+
+
+        s_form_submit_v2(
+          event.currentTarget,
+          form_html_id,
+          sGFormCustomError
+        );
+
+      }
+
+
+      submitButton.addEventListener(
+        'click',
+        sGFormSubmit
+      );
+
+    }
+
+  })();
+
+</script>

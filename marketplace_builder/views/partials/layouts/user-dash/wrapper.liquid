@@ -1,0 +1,21 @@
+{%- comment -%}
+  User Dash — basic two-column account area layout. The sidebar picks a tab
+  via ?tab=, and the content panel renders that tab (placeholder for now).
+{%- endcomment -%}
+
+{%- assign user_dash_tabs = 'profile,orders,wishlist,addresses' | split: ',' -%}
+{%- assign active_tab = context.params.tab | default: user_dash_tabs[0] -%}
+{%- unless user_dash_tabs contains active_tab -%}
+  {%- assign active_tab = user_dash_tabs[0] -%}
+{%- endunless -%}
+
+<section class="py-10">
+  <div class="container max-w-screen-xl px-4 mx-auto 2xl:px-0">
+    <div class="flex flex-col md:flex-row gap-8">
+      {%- include 'layouts/user-dash/sidebar', tabs: user_dash_tabs, active_tab: active_tab -%}
+      <div class="flex-1">
+        {%- include 'layouts/user-dash/content', active_tab: active_tab -%}
+      </div>
+    </div>
+  </div>
+</section>

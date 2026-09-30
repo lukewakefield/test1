@@ -1,0 +1,71 @@
+---
+metadata:
+  name: Basecoat Sidebar
+  tags:
+  class: section
+  lists:
+  - name: Nav
+    type: basecoat_nav
+    fields:
+    - id: label
+      type: text
+      label: Label
+      default: Buttons
+      is_title: true
+      richtext: false
+    - id: url
+      type: text
+      label: URL
+      default: "#bc-buttons"
+      richtext: false
+    - id: group
+      type: text
+      label: Group
+      default: Components
+      richtext: false
+  fields:
+  - id: title
+    type: text
+    label: Title
+    default: Basecoat
+    richtext: false
+  hide_on: []
+  category: headers
+  requires: []
+  settings: []
+  collection: basecoat
+  components: []
+  updated_at: 1781824000
+  collections:
+  global_data:
+  global_fields: []
+---
+<aside class="{{ this.variant }} bc-sidebar sidebar" data-side="left" aria-label="Basecoat">
+  <nav class="flex h-full flex-col gap-4 p-4" aria-label="Sidebar navigation">
+    <div class="bc-sidebar-controls">
+      <a href="/basecoat" class="px-2 text-[14px] font-semibold">{{ this.title | default: "Basecoat" }}</a>
+      <button type="button" class="btn" data-variant="outline" aria-label="Toggle light and dark appearance" onclick="window.basecoat.theme.toggle()">Appearance</button>
+    </div>
+    <div class="flex flex-col gap-1">
+      <p class="px-2 pt-2 text-[12px] font-medium text-[var(--color-neutral-500)]">Getting started</p>
+      <a href="#bc-intro" class="rounded-md px-2 py-1.5 text-[14px] text-[var(--color-neutral-900)] hover:bg-[var(--color-neutral-100)]">Introduction</a>
+      {% assign seen = "" %}
+      {% for item in lists.basecoat_nav %}
+        {% unless seen contains item.group %}
+          <p class="px-2 pt-3 text-[12px] font-medium text-[var(--color-neutral-500)]">{{ item.group }}</p>
+          {% assign seen = seen | append: item.group | append: "|" %}
+        {% endunless %}
+        <a href="{{ item.url }}" class="rounded-md px-2 py-1.5 text-[14px] text-[var(--color-neutral-900)] hover:bg-[var(--color-neutral-100)]" data-studio-list="{{ item._list }}">{{ item.label }}</a>
+      {% else %}
+        <p class="px-2 pt-3 text-[12px] font-medium text-[var(--color-neutral-500)]">Components</p>
+        <a href="#bc-buttons" class="rounded-md px-2 py-1.5 text-[14px]">Buttons</a>
+        <a href="#bc-badges" class="rounded-md px-2 py-1.5 text-[14px]">Badges</a>
+        <a href="#bc-cards" class="rounded-md px-2 py-1.5 text-[14px]">Cards</a>
+        <a href="#bc-forms" class="rounded-md px-2 py-1.5 text-[14px]">Forms</a>
+        <a href="#bc-feedback" class="rounded-md px-2 py-1.5 text-[14px]">Feedback</a>
+        <a href="#bc-overlays" class="rounded-md px-2 py-1.5 text-[14px]">Overlays</a>
+        <a href="#bc-data" class="rounded-md px-2 py-1.5 text-[14px]">Data</a>
+      {% endfor %}
+    </div>
+  </nav>
+</aside>

@@ -1,0 +1,52 @@
+---
+layout: templates/2
+max_deep_level: 1
+metadata:
+  name: Contact
+  studio:
+    order:
+    - default-contact-form
+    sections:
+      default-contact-form:
+        id: default-contact-form
+        data: {}
+        name: Default Contact Form
+        type: legacy_dynamic
+        title: default-contact-form
+        system:
+          id: '1'
+          type: default
+          layout: default-contact-form
+          admin_link: "/cms/forms"
+          liquid_tag: form
+          live_updates: false
+          section_name: Default Contact Form
+          schema_selector:
+            module_id: module_s1
+            sub_module_id: '1'
+          physical_file_path: views/partials/layouts/forms/global/default-contact-form.liquid
+        mapping: {}
+        settings:
+          id: '1'
+          variant: variant-1
+          show_map: true
+          intro_text: Have a question or want to get in touch? Choose an option below.
+          eyebrow_text: Contact
+          map_location: london
+          contact_email: contact@demo.com
+          contact_phone: "+1 2345 67890"
+          form_tab_label: Send Message
+          contact_address: 123 street, london area, united kingdom
+          details_tab_label: Contact Details
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+  last_edit: 1789475823291
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+
+{% include 'modules/module_357/render_page' %}

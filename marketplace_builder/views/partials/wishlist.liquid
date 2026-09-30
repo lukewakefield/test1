@@ -1,0 +1,36 @@
+{%- comment -%}
+  Lists the current user's wishlist products, resolved from the
+  `favourite_items` id array on the User model via the standard `module`
+  include's `item_ids` param (the same multi-id fetch pattern used
+  elsewhere in this theme, e.g. blog-cards/list/wrapper.liquid).
+{%- endcomment -%}
+
+{%- if context.current_user.id == blank -%}
+  <p class="text-gray-500">Log in to view your wishlist.</p>
+{%- else -%}
+  {%- assign favourite_ids = context.exports.current_user['Favourite Items'] -%}
+
+  {%- if favourite_ids.size == 0 -%}
+    <p class="text-gray-500">You haven't added anything to your wishlist yet.</p>
+  {%- else -%}
+    {%- assign favourite_ids_joined = favourite_ids | join: ',' -%}
+    {%- include 'module', id: '14/product', item_ids: favourite_ids_joined, collection: 'true', per_page: favourite_ids.size, datasource: 'true', type: 'list' -%}
+    {%- assign wishlist_products = context.exports['module_14/product'].data.result.items -%}
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for product in wishlist_products -%}
+        <div class="card">
+          <a href="{{ product.full_slug }}" class="block aspect-square mb-3">
+            <img src="{{ product['Image'] | asset_url }}" alt="{{ product.name }}" width="200" height="200" class="w-full h-full object-cover rounded">
+          </a>
+          <a href="{{ product.full_slug }}" class="font-semibold hover:underline">{{ product.name }}</a>
+          <p class="text-sm text-gray-500 mt-1">{{ product.price.currency_symbol }}{{ product.price.price_charge | divided_by: 100.0 | format_number: precision: 2 }}</p>
+          {%- assign this = product -%}
+          <div class="mt-3">
+            {%- include 'wishlist_toggle' -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

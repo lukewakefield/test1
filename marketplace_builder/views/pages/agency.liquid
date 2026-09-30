@@ -1,0 +1,80 @@
+---
+layout: templates/2
+max_deep_level: 1
+metadata:
+  name: Agency
+  studio:
+    order:
+    - agency-hero
+    - agency-intro
+    - agency-work
+    - agency-close
+    sections:
+      agency-hero:
+        data:
+          variant: variant-1
+          eyebrow: Studio
+          heading: We craft digital experiences for brands ready to dominate their category online.
+          cta_label: Start a project
+          cta_url: "#connect"
+        type: agency-hero
+        lists:
+          agency_badges:
+            data:
+              badge_partner:
+                label: Certified Partner
+                style: text
+              badge_featured:
+                label: Featured
+                style: pill
+            order:
+            - badge_partner
+            - badge_featured
+        system:
+          section_name: Agency Hero
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+      agency-intro:
+        data:
+          variant: variant-1
+        type: agency-intro
+        lists: {}
+        system:
+          section_name: Agency Intro
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+      agency-work:
+        data:
+          variant: variant-1
+        type: agency-work
+        lists: {}
+        system:
+          section_name: Agency Work
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+      agency-close:
+        data:
+          variant: variant-1
+        type: agency-close
+        lists: {}
+        system:
+          section_name: Agency Close
+        mapping: {}
+        settings: {}
+        components: {}
+        component_order: []
+  enabled: true
+  file_type: page
+slug: agency
+redirect_to: ''
+redirect_url: ''
+searchable: true
+---
+{% include 'modules/siteglide_system/constants' -%}
+{% include 'modules/module_357/render_page' %}

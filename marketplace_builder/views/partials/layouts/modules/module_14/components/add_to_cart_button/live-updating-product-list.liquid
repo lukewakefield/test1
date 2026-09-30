@@ -1,0 +1,27 @@
+---
+metadata:
+  studio_theme: studiokit
+  studio_library: studiokit
+  studio_dynamic/type: list
+  studio_dynamic/files:
+  - views/partials/layouts/modules/module_14/product/live-updating-product-list/list/wrapper.liquid
+  - views/partials/layouts/modules/module_14/product/live-updating-product-list/list/item.liquid
+  - views/partials/layouts/modules/module_14/components/add_to_cart_button/live-updating-product-list.liquid
+  studio_dynamic/theme: studiokit
+  studio_dynamic/layout: live-updating-product-list
+  studio_dynamic/theme_id: theme_01
+  studio_dynamic/module_id: module_14
+  studio_dynamic/layout_name: Live-updating product list
+  studio_dynamic/live_updates: 'true'
+  studio_dynamic/ui_framework: tailwind
+  studio_dynamic/original_name: Live Updating Product List
+  studio_dynamic/sub_module_id: '1'
+  studio_dynamic/make_global_form: false
+---
+{% include 'toast' %}
+
+<button class="button" onclick="s_e_cart_add('{{this.id}}', function() {
+	show_toast('success', 'Product added to cart!');
+});">
+  Add to cart
+</button>
