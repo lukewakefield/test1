@@ -16,8 +16,12 @@ This repository contains the Siteglide StudioKit project. The current priority i
 See [the reusable staging publishing workflow](docs/STAGING_PUBLISHING.md) for the
 verified CLI/MCP installation, exact network hosts, secure MPKIT bindings,
 preflight commands, and separate GitHub/staging confirmation requirements.
-The cloud proxy works with sandbox network access enabled. Siteglide API/staging
-hosts remain denied by the network policy, and no staging credentials are bound.
+The cloud proxy works with sandbox network access enabled. On 30 September 2026,
+runtime revision 3 reported current unrestricted/enforced network policy. The
+staging `/basecoat` page returned HTTP 200 with rendered Basecoat content, and the
+Siteglide API host was reachable. No staging credentials are bound; MCP
+`envs_list({details:true})` returned no environments, so authenticated access and
+deployment remain unverified. This public page check is not an interaction test.
 
 Install Siteglide CLI using its official documentation and configure authenticated staging access through supported secure environment setup. Credentials are deliberately excluded from this repository. Never read .siteglide-config; use the Siteglide MCP envs_list operation to identify environments. Prefer the Siteglide MCP for validation and platform operations.
 

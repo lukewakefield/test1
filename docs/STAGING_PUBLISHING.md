@@ -11,8 +11,13 @@ Production publishing is not authorized. The only approved Siteglide target is
 - Managed proxy DNS and TCP connectivity work with sandbox network access enabled.
   npm and GitHub reads work. A default sandbox command can report an unreachable
   proxy: run network commands with the supported sandbox network permission.
-- The enforced cloud policy currently denies the Siteglide API and staging host.
-  No authenticated connection, rendering verification, or deployment is established.
+- On the resumed runtime (revision 3), observations were current and unrestricted
+  network policy was enforced. Network-enabled execution reached staging
+  `/basecoat` (HTTP 200, rendered Basecoat markup, no matching Liquid error text)
+  and the API host (HTTP 404 for an unauthenticated GET `/api/cli/ping`). The API
+  response proves reachability only. No authenticated connection, interaction
+  verification, or deployment is established. MCP `envs_list({details:true})`
+  returned no environments and preflight stopped at the missing-binding gate.
 - All eight Basecoat files were submitted to the official MCP validator. It
   reported seven errors: six missing system/Studio module partials referenced by
   the template/page, and `MissingContentForLayout` on the template. There were
@@ -31,8 +36,10 @@ These are observed setup results, not a successful publishing record.
 
 ## Smallest secure environment configuration
 
-In this chat's cloud environment settings, keep the package-manager network preset
-and add these exact HTTPS hosts (no general Internet or TCP/VPN grant is needed):
+The user's All/unrestricted network setting is now observed as enforced. No
+further network change is needed for the hosts tested above. If narrowing the
+configuration later, keep the package-manager network preset and allow these
+exact HTTPS hosts (no TCP/VPN grant is needed):
 
 | Host | Purpose |
 | --- | --- |
@@ -44,15 +51,19 @@ and add these exact HTTPS hosts (no general Internet or TCP/VPN grant is needed)
 Bind an existing Siteglide API key securely, without entering it in chat or a file:
 
 - Runtime variable `MPKIT_URL` = `https://studiokit-themes-lw.staging-siteglide.com/`.
-- Secure variable binding `MPKIT_TOKEN` = the API key generated in Siteglide Admin
-  for an account authorized to access this staging site.
+- Secure variable binding `MPKIT_TOKEN` = an existing Siteglide **CLI API key**
+  for an account authorized to access this staging site (the `api_key` returned
+  by the official CLI authentication flow, not an account password).
 - Secure variable binding `MPKIT_EMAIL` = that account's developer email.
 
-Both CLI and MCP natively accept this exact MPKIT variable trio. No agent needs
-to read or generate `.siteglide-config`; do not commit it. Do not bind production
-credentials. If a key must first be generated, use Siteglide Admin's secure UI.
-The CLI's alternative `add` flow uses an interactive password and the auth API;
-it is not needed for an existing secure API-key binding.
+Both CLI and MCP natively accept this exact MPKIT variable trio; this was verified
+again in the installed official package source. Configure them through this
+chat's cloud environment settings, using the secure secret-binding mechanism for
+email and token. No agent needs to read or generate `.siteglide-config`; do not
+commit it. Do not bind production credentials or paste secrets into chat. If no
+CLI key is available, obtain it through Siteglide's supported authentication
+workflow in a trusted local session first. The alternative CLI `add` flow uses
+an interactive password and the auth API; it is not needed for an existing key.
 
 Apply the environment configuration through the supported settings review and
 restart/reconnect if requested. Recheck `cloud_environment.environment_status`:
