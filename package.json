@@ -1,0 +1,19 @@
+{
+  "name": "studiokit-staging-workflow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "staging:preflight": "node scripts/staging-access.mjs",
+    "basecoat:check": "node scripts/staging-access.mjs --validate-only",
+    "siteglide:mcp": "node node_modules/@siteglide/siteglide-mcp/bin/siteglide-mcp.js --project ."
+  },
+  "devDependencies": {
+    "@siteglide/siteglide-cli": "1.11.2",
+    "@siteglide/siteglide-mcp": "0.1.0-alpha.0",
+    "@modelcontextprotocol/sdk": "1.29.0"
+  }
+}

@@ -13,6 +13,12 @@ This repository contains the Siteglide StudioKit project. The current priority i
 - Preserve the existing agency theme, content and library default. Follow the project Siteglide skills under .agents/skills/siteglide/.
 
 ## Cloud setup still required
+See [the reusable staging publishing workflow](docs/STAGING_PUBLISHING.md) for the
+verified CLI/MCP installation, exact network hosts, secure MPKIT bindings,
+preflight commands, and separate GitHub/staging confirmation requirements.
+The cloud proxy works with sandbox network access enabled. Siteglide API/staging
+hosts remain denied by the network policy, and no staging credentials are bound.
+
 Install Siteglide CLI using its official documentation and configure authenticated staging access through supported secure environment setup. Credentials are deliberately excluded from this repository. Never read .siteglide-config; use the Siteglide MCP envs_list operation to identify environments. Prefer the Siteglide MCP for validation and platform operations.
 
 Before declaring completion, verify Liquid rendering, responsive layout, light/dark themes, sidebar navigation and interactive Basecoat components. Confirm staging deployment separately from local edits. Do not publish to production without authorization.

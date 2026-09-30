@@ -15,3 +15,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Generated staging archives and local skill copies
+.tmp/
+.Codex/
