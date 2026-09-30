@@ -7,6 +7,7 @@
     "node": ">=24"
   },
   "scripts": {
+    "staging:access": "node scripts/staging-access.mjs --access-only",
     "staging:preflight": "node scripts/staging-access.mjs",
     "basecoat:check": "node scripts/staging-access.mjs --validate-only",
     "siteglide:mcp": "node node_modules/@siteglide/siteglide-mcp/bin/siteglide-mcp.js --project ."

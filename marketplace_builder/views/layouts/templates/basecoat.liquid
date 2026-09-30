@@ -54,6 +54,9 @@ metadata:
 			font-family: Geist, "Geist Sans", ui-sans-serif, system-ui, sans-serif;
 		}
 		.bc-sidebar { position: static; width: 100%; height: auto; }
+        /* Basecoat fixes the inner nav for its drawer API. This page uses an
+           in-flow mobile sidebar and fixes the outer aside only on desktop. */
+        .bc-sidebar > nav { position: static; inset: auto; width: 100%; height: auto; translate: none; }
 		.bc-main { margin-inline-start: 0; }
         .bc-main { color: var(--foreground); }
         .bc-main > div > section { background: transparent; scroll-margin-top: 2rem; }
@@ -86,6 +89,7 @@ metadata:
 				background: var(--sidebar);
 			}
 			.bc-main { margin-inline-start: 16rem; }
+            .bc-sidebar > nav { min-height: 100%; }
 		}
 	</style>
 	<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>

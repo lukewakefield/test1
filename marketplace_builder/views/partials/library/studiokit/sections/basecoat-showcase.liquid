@@ -82,7 +82,7 @@ metadata:
           <p>Enter your email below to continue.</p>
         </header>
         <section>
-          <form class="grid gap-4" action="#" method="post">
+          <form class="grid gap-4" onsubmit="event.preventDefault()">
             <div class="grid gap-2">
               <label class="label" for="bc-email">Email</label>
               <input class="input" type="email" id="bc-email" placeholder="m@example.com">
@@ -149,7 +149,7 @@ metadata:
         <section>Check the form and try again.</section>
       </div>
       <div class="progress" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
-        <span style="width: 66%"></span>
+        <span class="w-2/3"></span>
       </div>
       <section class="accordion">
         <details open>
@@ -176,7 +176,8 @@ metadata:
             <p>Anyone with this link can view it.</p>
           </header>
           <section>
-            <input class="input" type="text" value="https://example.com/share" readonly>
+            <label class="label" for="bc-share-link">Share URL</label>
+            <input id="bc-share-link" class="input" type="text" value="https://example.com/share" readonly>
           </section>
           <footer>
             <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
@@ -249,6 +250,93 @@ metadata:
           </tbody>
         </table>
       </div>
+    </section>
+
+    <section id="bc-selection" class="flex flex-col gap-4">
+      <h2>Selection</h2>
+      <label class="label" for="bc-framework">Search frameworks</label>
+      <div id="bc-combobox" class="combobox w-full max-w-sm" data-auto-highlight="true">
+        <input id="bc-framework" type="text" role="combobox" placeholder="Select a framework" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="bc-framework-options">
+        <div data-popover aria-hidden="true">
+          <div role="listbox" id="bc-framework-options" aria-label="Frameworks" aria-orientation="vertical" data-empty="No frameworks found.">
+            <div role="option" data-value="astro">Astro</div>
+            <div role="option" data-value="sveltekit">SvelteKit</div>
+            <div role="option" data-value="siteglide">Siteglide</div>
+          </div>
+        </div>
+        <input type="hidden" name="framework" value="">
+      </div>
+      <fieldset class="fieldset">
+        <legend>Display density</legend>
+        <div class="field" data-orientation="horizontal"><input id="bc-density-default" class="input" type="radio" name="bc-density" value="default" checked><label for="bc-density-default">Default</label></div>
+        <div class="field" data-orientation="horizontal"><input id="bc-density-compact" class="input" type="radio" name="bc-density" value="compact"><label for="bc-density-compact">Compact</label></div>
+      </fieldset>
+      <div class="grid gap-2">
+        <label for="bc-native-select">Workspace</label>
+        <select id="bc-native-select" class="select"><option>Personal</option><option>Team</option><option>Enterprise</option></select>
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center justify-between"><label for="bc-volume">Volume</label><output id="bc-volume-value" for="bc-volume">50</output></div>
+        <input id="bc-volume" class="input w-full" type="range" min="0" max="100" value="50" oninput="document.getElementById('bc-volume-value').value = this.value">
+      </div>
+    </section>
+
+    <section id="bc-command" class="flex flex-col gap-4">
+      <h2>Command menu</h2>
+      <div class="command border" aria-label="Find a component">
+        <header><input type="text" role="combobox" aria-label="Search components" placeholder="Search components…" autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-controls="bc-command-items"></header>
+        <div id="bc-command-items" role="menu" aria-label="Components" aria-orientation="vertical" data-empty="No components found.">
+          <a role="menuitem" href="#bc-buttons" data-filter="Buttons">Buttons <kbd class="kbd">B</kbd></a>
+          <a role="menuitem" href="#bc-forms" data-filter="Forms">Forms <kbd class="kbd">F</kbd></a>
+          <a role="menuitem" href="#bc-overlays" data-filter="Overlays">Overlays <kbd class="kbd">O</kbd></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="bc-popover" class="flex flex-col gap-4">
+      <h2>Popover and tooltip</h2>
+      <div id="bc-dimensions" class="popover">
+        <button type="button" class="btn" data-variant="outline" aria-expanded="false" aria-controls="bc-dimensions-panel">Set dimensions</button>
+        <div id="bc-dimensions-panel" data-popover aria-hidden="true" class="w-64">
+          <header><h3>Dimensions</h3><p>Adjust this layer.</p></header>
+          <div class="grid gap-2"><label for="bc-width">Width</label><input id="bc-width" class="input" value="100%"><label for="bc-height">Height</label><input id="bc-height" class="input" value="300px"></div>
+        </div>
+      </div>
+      <button type="button" class="btn self-start" data-variant="outline" data-tooltip="Tooltip on hover or keyboard focus" data-side="top">Hover or focus</button>
+    </section>
+
+    <section id="bc-drawer-section" class="flex flex-col gap-4">
+      <h2>Drawer</h2>
+      <button type="button" class="btn self-start" data-variant="outline" onclick="document.getElementById('bc-drawer').showModal()">Open drawer</button>
+      <dialog id="bc-drawer" class="drawer" aria-labelledby="bc-drawer-title" aria-describedby="bc-drawer-description">
+        <article>
+          <header class="mx-auto w-full max-w-sm"><h2 id="bc-drawer-title">Workspace settings</h2><p id="bc-drawer-description">Try a drawer that works with touch and keyboard.</p></header>
+          <section class="mx-auto grid w-full max-w-sm gap-2 px-4"><label for="bc-workspace-name">Workspace name</label><input id="bc-workspace-name" class="input" value="North studio"></section>
+          <footer class="mx-auto w-full max-w-sm"><button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close drawer</button></footer>
+        </article>
+      </dialog>
+    </section>
+
+    <section id="bc-loading" class="flex flex-col gap-4">
+      <h2>Loading and empty states</h2>
+      <div role="status" aria-label="Loading profile" class="flex items-center gap-4">
+        <div class="skeleton size-12 rounded-full" aria-hidden="true"></div>
+        <div class="grid flex-1 gap-2" aria-hidden="true"><div class="skeleton h-4 w-3/4"></div><div class="skeleton h-4 w-1/2"></div></div>
+      </div>
+      <article class="item">
+        <figure><svg role="status" aria-label="Loading" class="animate-spin" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></figure>
+        <section><h3>Processing payment…</h3><p>A loading indicator example.</p></section>
+      </article>
+      <section class="empty"><header><h3>No projects yet</h3><p>Create your first project to get started.</p></header><footer><a class="btn" href="#bc-cards">Explore cards</a></footer></section>
+      <div class="scroll-area h-32 overflow-auto rounded-md border p-4" tabindex="0" role="region" aria-label="Scrollable activity">
+        <ol class="grid gap-3"><li>Workspace created</li><li>Profile updated</li><li>Team invited</li><li>Project started</li><li>First release shipped</li><li>Archive updated</li></ol>
+      </div>
+    </section>
+
+    <section id="bc-toast" class="flex flex-col gap-4">
+      <h2>Toast notifications</h2>
+      <button type="button" class="btn self-start" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: 'success', title: 'Changes saved', description: 'This is a demonstration notification.', cancel: { label: 'Dismiss' } })">Show notification</button>
+      <div id="toaster" class="toaster" data-align="end"></div>
     </section>
 
   </div>

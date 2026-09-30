@@ -3,7 +3,36 @@
 Production publishing is not authorized. The only approved Siteglide target is
 `https://studiokit-themes-lw.staging-siteglide.com/`.
 
-## Verified setup on 30 September 2026
+## Resumed checks on 30 September 2026
+
+- Restored `cloud/staging-workflow` from GitHub commit `05ad300` and installed
+  the pinned CLI/MCP dependencies in the new environment.
+- Public staging `/basecoat` returns HTTP 200 and contains the existing showcase.
+- MCP `envs_list({details:true})` sees `(MPKIT)` on the exact staging hostname.
+  The configured `MPKIT_URL` is a bare hostname. Set it to
+  `https://studiokit-themes-lw.staging-siteglide.com/`.
+- With that full URL supplied for the probe, authenticated `liquid_exec` returns
+  HTTP 401. The secret binding currently allows only the staging hostname,
+  whereas the official client sends the token to `api.siteglide.co.uk`.
+  Add `api.siteglide.co.uk` to **MPKIT_TOKEN's allowed domains**, save and
+  republish the environment, then start a chat with the updated environment.
+  The existing token's validity has not been established.
+- Network requests work in this session; runtime readiness observations remain
+  `unknown`, so configuration is not treated as proof of authentication.
+- `npm run staging:access` now probes authentication without waiting on local
+  validation. `staging:preflight` still requires both authentication and validation.
+- Expanded the local showcase with combobox, command, popover, tooltip, drawer,
+  toast, radio, native select, range, skeleton, spinner, item, empty and scroll
+  examples, plus six sidebar destinations. Staging has not received these edits.
+- Chromium checks pass for keyboard selection/search, Escape dismissal,
+  toast dismissal, range output, sidebar targets, appearance switching and
+  no horizontal overflow at 375, 768 and 1440 pixels. These checks render
+  the section markup locally; they do not prove Studio's server rendering.
+- Sidebar and showcase pass official MCP validation with no errors. Full local
+  validation still reports the seven existing system/Studio module and layout
+  errors below. They continue to block deployment.
+
+## Earlier workflow setup
 
 - Node 24.19.0; official CLI 1.11.2 and MCP 0.1.0-alpha.0 installed.
 - The stdio MCP responds to `envs_list`, `sync_status`, `git_status`, and
@@ -44,8 +73,9 @@ and add these exact HTTPS hosts (no general Internet or TCP/VPN grant is needed)
 Bind an existing Siteglide API key securely, without entering it in chat or a file:
 
 - Runtime variable `MPKIT_URL` = `https://studiokit-themes-lw.staging-siteglide.com/`.
-- Secure variable binding `MPKIT_TOKEN` = the API key generated in Siteglide Admin
-  for an account authorized to access this staging site.
+- Network secret `MPKIT_TOKEN` = the API key generated in Siteglide Admin
+  for an account authorized to access this staging site. Its allowed domains
+  must include `api.siteglide.co.uk`, where the official CLI/MCP authenticates.
 - Secure variable binding `MPKIT_EMAIL` = that account's developer email.
 
 Both CLI and MCP natively accept this exact MPKIT variable trio. No agent needs
@@ -73,6 +103,7 @@ From the repository root, with sandbox network access enabled:
 
 ```sh
 npm ci --ignore-scripts --no-audit --no-fund --cache /tmp/studiokit-npm-cache
+npm run staging:access
 npm run basecoat:check
 npm run staging:preflight
 ```
@@ -87,10 +118,11 @@ on errors, active syncs or recorded conflicts. Review warnings before publishing
 local lint is not proof of rendered correctness. The upstream validator can use
 its bundled documentation if live documentation is unavailable.
 
-`staging:preflight` additionally calls `envs_list({details:true})`, requires the
+`staging:access` and `staging:preflight` call `envs_list({details:true})`, require the
 exact HTTPS staging host and `classification: staging`, and asks `liquid_exec`
 to render a fixed harmless marker. This proves authenticated Liquid access when
-it passes; it never deploys. With MPKIT bindings, MCP names the environment
+it passes; neither command deploys. The full preflight additionally requires
+local validation. With MPKIT bindings, MCP names the environment
 `(MPKIT)`. An environment's key name alone is not proof that it is staging.
 
 For a native MCP client, run `npm run siteglide:mcp` from this repository,
